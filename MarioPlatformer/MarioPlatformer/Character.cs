@@ -8,8 +8,9 @@ namespace MarioPlatformer
     abstract class Character : GameObject
     {
         protected int health;
-
         protected float speed;
+
+        protected float verticalSpeed;
 
         public Character(SpriteSheet texture, Vector2 position, int health, float speed) : base(texture, position)
         {

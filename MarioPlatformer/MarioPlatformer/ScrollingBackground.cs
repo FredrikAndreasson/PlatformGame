@@ -18,7 +18,7 @@ namespace MarioPlatformer
 
             this.background = background;
             this.position = position;
-            this.position.Width *= 3;
+            this.position.Width *= 3; // *= levelWidth...
             source = this.position;
         }
 
@@ -26,11 +26,6 @@ namespace MarioPlatformer
         {
             source.X++;
             position.Y = playerY- position.Height/2;
-
-            if (position.X <= -position.Width/10)
-            {
-
-            }
         }
         public void Draw(SpriteBatch spriteBatch)
         {

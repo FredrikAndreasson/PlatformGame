@@ -16,6 +16,15 @@ namespace MarioPlatformer
 
         public override void Update(GameTime gameTime)
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.Space)&& verticalSpeed == 0)
+            {
+                verticalSpeed += speed/10;
+
+            }
+            if (verticalSpeed > 0)
+            {
+                verticalSpeed -= 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 position.X -= speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -24,6 +33,8 @@ namespace MarioPlatformer
             {
                 position.X += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
+
+            position.Y -= verticalSpeed;
         }
     }
 }
