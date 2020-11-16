@@ -78,7 +78,7 @@ namespace MarioPlatformer
             Vector2 position = new Vector2(start.X + (spriteSize.X * x) + (offset * x), start.Y + (spriteSize.Y * y) + (offset * y));
             return new Sprite(Texture, position, spriteSize);
         }
-
+        
         public Sprite Sprite
         {
             get
