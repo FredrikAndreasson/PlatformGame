@@ -20,6 +20,7 @@ namespace MarioPlatformer
         public Matrix Transform 
         {
             get { return transform; }
+            set { transform = value; }
         }
 
         public void SetPosition(Vector2 position)

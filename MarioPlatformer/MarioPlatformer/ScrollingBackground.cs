@@ -24,9 +24,11 @@ namespace MarioPlatformer
             
         }
 
-        public void Update(GameTime gameTime, int playerY)
+        public void Update(GameTime gameTime, Vector2 offset, float layerMultiplier)
         {
-            source.X++;
+            //source.X++;
+            
+            source.X = (int)(offset.X * layerMultiplier);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
