@@ -33,7 +33,14 @@ namespace MarioPlatformer
             {
                 position.X += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                position.Y -= speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                position.Y += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
             position.Y -= verticalSpeed;
         }
     }
