@@ -19,12 +19,11 @@ namespace MarioPlatformer
         //GameStates
         GameState gameState;
         InGameState inGameState;
+        private MenuState menu;
 
 
         private SpriteSheetLoader spritesheetLoader;
 
-        private Level level;
-        private MenuState menu;
 
         public Game1()
         {
@@ -52,17 +51,11 @@ namespace MarioPlatformer
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             spritesheetLoader = new SpriteSheetLoader(Content);
-            SpriteSheet playerAnimationSheet = spritesheetLoader.LoadSpriteSheet("player", new Vector2(0, 0), new Vector2(12, 16), new Vector2(12, 16));
-            Texture2D backgroundTex = spritesheetLoader.LoadTexture("scrollingBackground");
+            
 
-            player = new Player(playerAnimationSheet, new Vector2(250, 250), 5, 100.0f);
-            camera = new Camera(GraphicsDevice.Viewport);
-            scrollingBackground = new ScrollingBackground(backgroundTex, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
-
-            level = new Level(spritesheetLoader, LevelData.LoadLevelData("Content\\Level1.lvl"));
-
+           
+            
             SpriteFont font = Content.Load<SpriteFont>(@"font");
-
             menu = new MenuState(font);
 
             menu.Actions.Add(new MenuOption("1. Start Game", () => System.Diagnostics.Debug.WriteLine("StartGame")));
@@ -70,7 +63,7 @@ namespace MarioPlatformer
             menu.Actions.Add(new MenuOption("3. Open Editor", () => System.Diagnostics.Debug.WriteLine("Opening Editor")));
             menu.Actions.Add(new MenuOption("4. Exit", () => Exit()));
 
-            inGameState = new InGameState(player, camera, scrollingBackground);
+            inGameState = new InGameState(spritesheetLoader,GraphicsDevice, Window);
             gameState = inGameState;
 
         }
@@ -88,15 +81,7 @@ namespace MarioPlatformer
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null, null, camera.Transform);
-
             gameState.Draw(spriteBatch);
-            level.Draw(spriteBatch);
-            menu.Draw(spriteBatch);
-
-            level.Draw(spriteBatch);
-            spriteBatch.End();
-
         }
     }
 }

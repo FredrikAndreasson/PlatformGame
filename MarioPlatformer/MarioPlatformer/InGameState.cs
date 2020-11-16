@@ -12,11 +12,18 @@ namespace MarioPlatformer
         private Camera camera;
         private ScrollingBackground background;
 
-        public InGameState(Player player, Camera camera, ScrollingBackground background)
+        private Level level;
+
+        public InGameState(SpriteSheetLoader loader, GraphicsDevice graphicsDevice, GameWindow window)
         {
-            this.player = player;
-            this.camera = camera;
-            this.background = background;
+            SpriteSheet playerAnimationSheet = loader.LoadSpriteSheet("player", new Vector2(0, 0), new Vector2(12, 16), new Vector2(12, 16));
+            Texture2D backgroundTex = loader.LoadTexture("scrollingBackground");
+
+            this.player = new Player(playerAnimationSheet, new Vector2(250, 250), 5, 500.0f);
+            this.camera = new Camera(graphicsDevice.Viewport);
+            this.background = new ScrollingBackground(backgroundTex, new Rectangle(0, 0, window.ClientBounds.Width, window.ClientBounds.Height));
+
+            this.level = new Level(loader, LevelData.LoadLevelData("Content\\Level1.lvl"));
         }
         public override void Update(GameTime gameTime)
         {
@@ -29,8 +36,13 @@ namespace MarioPlatformer
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null, null, camera.Transform);
+
             background.Draw(spriteBatch);
             player.Draw(spriteBatch);
+            level.Draw(spriteBatch);
+            
+            spriteBatch.End();
         }
     }
 }

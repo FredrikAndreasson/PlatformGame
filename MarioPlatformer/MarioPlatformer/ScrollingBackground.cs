@@ -24,7 +24,7 @@ namespace MarioPlatformer
 
         public void Update(GameTime gameTime, int playerY)
         {
-            source.X++;
+            //source.X++;
             position.Y = playerY- position.Height/2;
         }
         public void Draw(SpriteBatch spriteBatch)

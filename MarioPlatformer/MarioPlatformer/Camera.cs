@@ -14,6 +14,7 @@ namespace MarioPlatformer
         public Camera(Viewport view)
         {
             this.view = view;
+            this.transform = Matrix.CreateTranslation(0, 0, 0);
         }
 
         public Matrix Transform 
@@ -23,7 +24,7 @@ namespace MarioPlatformer
 
         public void SetPosition(Vector2 position)
         {
-            transform = Matrix.CreateTranslation(-position.X + view.Width / 2, -position.Y + view.Height / 2, 0.0f);
+            transform.Translation = new Vector3(-position.X + view.Width / 2, -position.Y + view.Height / 2, 0.0f);
         }
     }
 }
