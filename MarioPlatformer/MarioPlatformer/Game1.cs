@@ -7,10 +7,23 @@ namespace MarioPlatformer
 {
     public class Game1 : Game
     {
-        public static Vector2 Scale = Vector2.One;
+        public static Vector2 Scale = new Vector2(3,3);
 
         private GraphicsDeviceManager Graphics;
-        private SpriteBatch SpriteBatch;
+        private SpriteBatch spriteBatch;
+
+        //Different spritesheets
+        Texture2D blockSheet;
+        Texture2D enemySheet;
+        Texture2D playerSheet;
+
+        private Camera camera;
+        private Player player;
+
+        //GameStates
+        GameState gameState;
+        InGameState inGameState;
+
 
         private SpriteSheetLoader spritesheetLoader;
 
@@ -35,7 +48,19 @@ namespace MarioPlatformer
 
         protected override void LoadContent()
         {
-            SpriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            blockSheet = Content.Load<Texture2D>("blocks");
+            enemySheet = Content.Load<Texture2D>("enemies");
+            playerSheet = Content.Load<Texture2D>("player");
+
+            SpriteSheet playerAnimationSheet = new SpriteSheet(playerSheet, new Vector2(0, 0), new Vector2(12, 16), new Vector2(12, 16));
+
+            camera = new Camera(GraphicsDevice.Viewport);
+            player = new Player(playerAnimationSheet, new Vector2(0, 0), 5, 100.0f);
+
+            inGameState = new InGameState(player, camera);
+            gameState = inGameState;
 
             spritesheetLoader = new SpriteSheetLoader(Content);
 
@@ -49,11 +74,18 @@ namespace MarioPlatformer
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            gameState.Update(gameTime);
+
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.Transform);
+
+            gameState.Draw(spriteBatch);
+
+            spriteBatch.End();
 
             SpriteBatch.Begin();
             level.Draw(SpriteBatch);
