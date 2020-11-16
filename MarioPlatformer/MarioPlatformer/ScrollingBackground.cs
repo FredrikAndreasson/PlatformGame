@@ -19,13 +19,14 @@ namespace MarioPlatformer
             this.background = background;
             this.position = position;
             this.position.Width *= 3; // *= levelWidth...
+            this.position.Height *= 3; // *= levelHeight...
             source = this.position;
+            
         }
 
         public void Update(GameTime gameTime, int playerY)
         {
             source.X++;
-            position.Y = playerY- position.Height/2;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
