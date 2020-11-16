@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -16,49 +17,41 @@ namespace MarioPlatformer
 
     class LevelData
     {
-        private string spritesheetFilePath;
-        private int width;
-        private int height;
+        private string spritesheetFilePath;       
+        private Tile[] tiles;
 
-        private TileType[,] tiles;
-
-        public LevelData(string spritesheetFilePath, int width, int height, TileType[,] tiles)
+        public LevelData(string spritesheetFilePath, Tile[] tiles)
         {
             this.spritesheetFilePath = spritesheetFilePath;
-            this.width = width;
-            this.height = height;
             this.tiles = tiles;
         }
 
         public string SpriteSheetFilePath => this.spritesheetFilePath;
 
-        public int Width => this.width;
-        public int Height => this.height;
+        public int Size => Tiles.Length;
 
-        public TileType[,] Tiles => this.tiles;
+        public Tile[] Tiles => this.tiles;
 
         public static LevelData LoadLevelData(string filePath)
         {
             LevelData data = null;
             using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
             {
-                string s = reader.ReadString();
-                int w = reader.ReadInt32();
-                int h = reader.ReadInt32();
+                string spritesPath = reader.ReadString();
+                int size = reader.ReadInt32();
 
-                TileType[,] tiles = new TileType[w, h];
+                Tile[] tiles = new Tile[size];
 
-                for(int i = 0; i < w * h; i++)
+                for(int i = 0; i < size; i++)
                 {
-                    int x = i % w;
-                    int y = i / w;
-
                     int value = reader.ReadInt32();
+                    float x = reader.ReadSingle();
+                    float y = reader.ReadSingle();
                     TileType type = (TileType)value;
-                    tiles[x, y] = type;
+                    tiles[i] = new Tile(null, new Vector2(x,y), type);
                 }
 
-                data = new LevelData(s, w, h, tiles);
+                data = new LevelData(spritesPath, tiles);
             }
             return data;
         }
@@ -68,16 +61,14 @@ namespace MarioPlatformer
             using (BinaryWriter writer = new BinaryWriter(File.Open(filePath, FileMode.Create)))
             {
                 writer.Write(levelData.spritesheetFilePath);
-                writer.Write(levelData.width);
-                writer.Write(levelData.height);
+                writer.Write(levelData.Size);
                                 
-                for(int i = 0; i < levelData.width * levelData.height;i++)
+                for(int i = 0; i < levelData.Size; i++)
                 {
-                    int x = i % levelData.width;
-                    int y = i / levelData.width;
-
-                    int value = (int)levelData.tiles[x, y];
-                    writer.Write(value);
+                    Tile tile = levelData.tiles[i];
+                    writer.Write((int)tile.Type);
+                    writer.Write(tile.Position.X);
+                    writer.Write(tile.Position.Y);
                 }
             }
         }

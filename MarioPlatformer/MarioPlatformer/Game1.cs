@@ -28,6 +28,7 @@ namespace MarioPlatformer
         private SpriteSheetLoader spritesheetLoader;
 
         private Level level;
+        private MenuState menu;
 
         public Game1()
         {
@@ -35,16 +36,18 @@ namespace MarioPlatformer
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            TileType[,] tiles = new TileType[2, 2];
-            tiles[0, 0] = TileType.Empty;
-            tiles[1, 0] = TileType.Empty;
-            tiles[0, 1] = TileType.Empty;
-            tiles[1, 1] = TileType.Block3;
-            LevelData data = new LevelData(@"blocks", 2, 2, tiles);
+            Tile[] tiles = new Tile[4];
+            tiles[0] = new Tile(null, new Vector2(0, 0), TileType.Empty);
+            tiles[1] = new Tile(null, new Vector2(16 * 3, 0), TileType.Block1);
+            tiles[2] = new Tile(null, new Vector2(32 * 3, 0), TileType.Block2);
+            tiles[3] = new Tile(null, new Vector2(0, 16 * 3), TileType.Block2);
+            LevelData data = new LevelData(@"blocks", tiles);
 
             LevelData.SaveData(data, "Content\\Level1.lvl");
 
+            
         }
+    
 
         protected override void LoadContent()
         {
@@ -67,6 +70,14 @@ namespace MarioPlatformer
 
             level = new Level(spritesheetLoader, LevelData.LoadLevelData("Content\\Level1.lvl"));
 
+            SpriteFont font = Content.Load<SpriteFont>(@"font");
+
+            menu = new MenuState(font);
+
+            menu.Actions.Add(new MenuOption("1. Start Game", () => System.Diagnostics.Debug.WriteLine("StartGame")));
+            menu.Actions.Add(new MenuOption("2. Switch Character", () => System.Diagnostics.Debug.WriteLine("Switching Character")));
+            menu.Actions.Add(new MenuOption("3. Open Editor", () => System.Diagnostics.Debug.WriteLine("Opening Editor")));
+            menu.Actions.Add(new MenuOption("4. Exit", () => Exit()));
         }
 
         protected override void Update(GameTime gameTime)
@@ -74,8 +85,9 @@ namespace MarioPlatformer
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            gameState.Update(gameTime);
+            menu.Update(gameTime);
 
+            gameState.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -84,12 +96,11 @@ namespace MarioPlatformer
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.Transform);
 
             gameState.Draw(spriteBatch);
+            level.Draw(spriteBatch);
+            menu.Draw(spriteBatch);
 
             spriteBatch.End();
 
-            SpriteBatch.Begin();
-            level.Draw(SpriteBatch);
-            SpriteBatch.End();
 
         }
     }

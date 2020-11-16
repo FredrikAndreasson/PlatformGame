@@ -12,7 +12,7 @@ namespace MarioPlatformer
         private LevelData levelData;
         private SpriteSheet spritesheet;
 
-        private Sprite[] sprites;
+        private Tile[] tiles;
 
         public Level(SpriteSheetLoader loader, LevelData levelData)
         {
@@ -25,18 +25,19 @@ namespace MarioPlatformer
         {
             this.spritesheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(80,80), new Vector2(16, 16), 0);
 
-            this.sprites = new Sprite[levelData.Width * levelData.Height];
-            for(int i = 0; i < sprites.Length;i++)
+            this.tiles = new Tile[levelData.Size];
+            for(int i = 0; i < tiles.Length;i++)
             {
-                int x = i % levelData.Width;
-                int y = i / levelData.Width;
-                int value = (int) levelData.Tiles[x, y];
+                Tile tile = levelData.Tiles[i];
 
-                int sx = value % spritesheet.Columns;
-                int sy = value / spritesheet.Columns;               
-                
+                int sx = (int)tile.Type % spritesheet.Columns;
+                int sy = (int)tile.Type / spritesheet.Columns;
 
-                sprites[i] = spritesheet.GetAt(sx, sy);
+                SpriteSheet sheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(80, 80), new Vector2(16, 16), 0);
+                sheet.XIndex = sx;
+                sheet.YIndex = sy;
+
+                tiles[i] = new Tile(sheet, tile.Position, tile.Type);
             }
         }
 
@@ -44,11 +45,9 @@ namespace MarioPlatformer
         {
             //spritesheet.Sprite.Draw(spriteBatch, Vector2.Zero, Vector2.One);
 
-            int index = 0;
-            foreach(Sprite sprite in sprites)
+            foreach(Tile tile in tiles)
             {
-                sprite.Draw(spriteBatch, new Vector2(index * sprite.SpriteSize.X, 0), Vector2.One);
-                index++;
+                tile.Draw(spriteBatch);
             }
         }
 
