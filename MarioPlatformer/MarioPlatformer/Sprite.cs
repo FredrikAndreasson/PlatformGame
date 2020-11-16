@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace PacMan
+namespace MarioPlatformer
 {
     public class Sprite
     {

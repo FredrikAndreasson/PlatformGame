@@ -6,6 +6,8 @@ namespace MarioPlatformer
 {
     public class Game1 : Game
     {
+        public static Vector2 Scale = Vector2.One;
+
         private GraphicsDeviceManager Graphics;
         private SpriteBatch SpriteBatch;
 

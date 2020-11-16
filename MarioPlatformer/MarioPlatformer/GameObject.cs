@@ -9,12 +9,12 @@ namespace MarioPlatformer
 {
     class GameObject
     {
-        protected Texture2D texture;
+        protected SpriteSheet texture;
         protected Vector2 position;
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, Color.White);
+            texture.Sprite.Draw(spriteBatch, position, Game1.Scale);
         }
     }
 }

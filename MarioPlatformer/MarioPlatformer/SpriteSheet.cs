@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PacMan
+namespace MarioPlatformer
 {
     public class SpriteSheet
     {
