@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MarioPlatformer
 {
-    class Enemy
+    class Enemy : Character
     {
     }
 }

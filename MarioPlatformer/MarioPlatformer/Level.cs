@@ -6,5 +6,6 @@ namespace MarioPlatformer
 {
     class Level
     {
+
     }
 }
