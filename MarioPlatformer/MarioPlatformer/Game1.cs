@@ -12,13 +12,9 @@ namespace MarioPlatformer
         private GraphicsDeviceManager Graphics;
         private SpriteBatch spriteBatch;
 
-        //Different spritesheets
-        Texture2D blockSheet;
-        Texture2D enemySheet;
-        Texture2D playerSheet;
-
         private Camera camera;
         private Player player;
+        private ScrollingBackground scrollingBackground;
 
         //GameStates
         GameState gameState;
@@ -45,7 +41,9 @@ namespace MarioPlatformer
 
             LevelData.SaveData(data, "Content\\Level1.lvl");
 
-            
+            Graphics.PreferredBackBufferWidth = 1280;
+            Graphics.PreferredBackBufferHeight = 900;
+
         }
     
 
@@ -53,20 +51,13 @@ namespace MarioPlatformer
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            blockSheet = Content.Load<Texture2D>("blocks");
-            enemySheet = Content.Load<Texture2D>("enemies");
-            playerSheet = Content.Load<Texture2D>("player");
-
-            SpriteSheet playerAnimationSheet = new SpriteSheet(playerSheet, new Vector2(0, 0), new Vector2(12, 16), new Vector2(12, 16));
-
-            camera = new Camera(GraphicsDevice.Viewport);
-            player = new Player(playerAnimationSheet, new Vector2(0, 0), 5, 100.0f);
-
-            inGameState = new InGameState(player, camera);
-            gameState = inGameState;
-
             spritesheetLoader = new SpriteSheetLoader(Content);
+            SpriteSheet playerAnimationSheet = spritesheetLoader.LoadSpriteSheet("player", new Vector2(0, 0), new Vector2(12, 16), new Vector2(12, 16));
+            Texture2D backgroundTex = spritesheetLoader.LoadTexture("scrollingBackground");
 
+            player = new Player(playerAnimationSheet, new Vector2(250, 250), 5, 100.0f);
+            camera = new Camera(GraphicsDevice.Viewport);
+            scrollingBackground = new ScrollingBackground(backgroundTex, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
 
             level = new Level(spritesheetLoader, LevelData.LoadLevelData("Content\\Level1.lvl"));
 
@@ -78,6 +69,10 @@ namespace MarioPlatformer
             menu.Actions.Add(new MenuOption("2. Switch Character", () => System.Diagnostics.Debug.WriteLine("Switching Character")));
             menu.Actions.Add(new MenuOption("3. Open Editor", () => System.Diagnostics.Debug.WriteLine("Opening Editor")));
             menu.Actions.Add(new MenuOption("4. Exit", () => Exit()));
+
+            inGameState = new InGameState(player, camera, scrollingBackground);
+            gameState = inGameState;
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -93,14 +88,14 @@ namespace MarioPlatformer
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.Transform);
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null, null, camera.Transform);
 
             gameState.Draw(spriteBatch);
             level.Draw(spriteBatch);
             menu.Draw(spriteBatch);
 
+            level.Draw(spriteBatch);
             spriteBatch.End();
-
 
         }
     }

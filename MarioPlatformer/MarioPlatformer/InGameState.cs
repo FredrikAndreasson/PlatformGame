@@ -10,20 +10,26 @@ namespace MarioPlatformer
     {
         private Player player;
         private Camera camera;
+        private ScrollingBackground background;
 
-        public InGameState(Player player, Camera camera)
+        public InGameState(Player player, Camera camera, ScrollingBackground background)
         {
             this.player = player;
             this.camera = camera;
+            this.background = background;
         }
         public override void Update(GameTime gameTime)
         {
-            camera.SetPosition(player.Position);
+            background.Update(gameTime, (int)player.Position.Y);
             player.Update(gameTime);
+
+            //Update last so that the player stays centered
+            camera.SetPosition(player.Position);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            background.Draw(spriteBatch);
             player.Draw(spriteBatch);
         }
     }
