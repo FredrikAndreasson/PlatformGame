@@ -12,15 +12,17 @@ namespace MarioPlatformer
         protected SpriteSheet texture;
         protected Vector2 position;
 
-        public virtual void Draw(SpriteBatch spriteBatch)
-        {
-            texture.Sprite.Draw(spriteBatch, position, Game1.Scale);
-        }
-
         public GameObject(SpriteSheet texture, Vector2 position)
         {
             this.texture = texture;
             this.position = position;
         }
+
+        public Vector2 Position => position;
+
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            texture.Sprite.Draw(spriteBatch, position, Game1.Scale);
+        }        
     }
 }

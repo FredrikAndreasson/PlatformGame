@@ -14,11 +14,6 @@ namespace MarioPlatformer
 
         }
 
-        public Vector2 Position
-        {
-            get { return position; }
-        }
-
         public override void Update(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.D))
