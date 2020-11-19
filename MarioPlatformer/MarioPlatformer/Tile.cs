@@ -7,6 +7,8 @@ namespace MarioPlatformer
 {
     class Tile : GameObject
     {
+        public static readonly int SIZE = 16;
+
         private TileType type;
 
         public Tile(SpriteSheet spritesheet, Vector2 position, TileType type) : base(spritesheet, position)
@@ -15,5 +17,6 @@ namespace MarioPlatformer
         }
 
         public TileType Type => type;
+        
     }
 }

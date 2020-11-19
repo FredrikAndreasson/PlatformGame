@@ -17,10 +17,10 @@ namespace MarioPlatformer
         private ScrollingBackground scrollingBackground;
 
         //GameStates
-        GameState gameState;
-        InGameState inGameState;
+        private GameState gameState;
+        private InGameState inGameState;
         private MenuState menu;
-
+        private Editor editor;
 
         private SpriteSheetLoader spritesheetLoader;
 
@@ -50,10 +50,7 @@ namespace MarioPlatformer
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            spritesheetLoader = new SpriteSheetLoader(Content);
-            
-
-           
+            spritesheetLoader = new SpriteSheetLoader(Content, GraphicsDevice);    
             
             SpriteFont font = Content.Load<SpriteFont>(@"font");
             menu = new MenuState(font);
@@ -63,8 +60,10 @@ namespace MarioPlatformer
             menu.Actions.Add(new MenuOption("3. Open Editor", () => System.Diagnostics.Debug.WriteLine("Opening Editor")));
             menu.Actions.Add(new MenuOption("4. Exit", () => Exit()));
 
-            inGameState = new InGameState(spritesheetLoader,GraphicsDevice, Window);
-            gameState = inGameState;
+            inGameState = new InGameState(spritesheetLoader, GraphicsDevice, Window);
+            editor = new Editor(spritesheetLoader, Window);
+            //gameState = inGameState;
+            gameState = editor;
 
         }
 

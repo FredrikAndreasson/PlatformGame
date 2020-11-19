@@ -43,8 +43,6 @@ namespace MarioPlatformer
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //spritesheet.Sprite.Draw(spriteBatch, Vector2.Zero, Vector2.One);
-
             foreach(Tile tile in tiles)
             {
                 tile.Draw(spriteBatch);
