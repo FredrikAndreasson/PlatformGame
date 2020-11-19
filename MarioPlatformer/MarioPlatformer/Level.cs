@@ -14,12 +14,16 @@ namespace MarioPlatformer
 
         private Tile[] tiles;
 
+        private bool isDay = false;
+
         public Level(SpriteSheetLoader loader, LevelData levelData)
         {
             this.levelData = levelData;
 
             Create(loader);
         }
+
+        public bool IsDay => isDay;
 
         private void Create(SpriteSheetLoader loader)
         {
@@ -40,6 +44,8 @@ namespace MarioPlatformer
                 tiles[i] = new Tile(sheet, tile.Position, tile.Type);
             }
         }
+
+        
 
         public void Draw(SpriteBatch spriteBatch)
         {
