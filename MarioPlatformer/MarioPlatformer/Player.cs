@@ -9,13 +9,15 @@ namespace MarioPlatformer
     class Player : Character
     {
 
-        public Player(SpriteSheet texture, Vector2 position,Vector2 size, int health, float speed) : base(texture, position,size, health, speed)
+        public Player(SpriteSheet texture, Level level, Vector2 position,Vector2 size, int health, float speed) : base(texture, level, position, size, health, speed)
         {
 
         }
 
         public override void Update(GameTime gameTime)
         {
+            UpdateGravity(gameTime);
+
             if (Keyboard.GetState().IsKeyDown(Keys.Space)&& verticalSpeed == 0)
             {
                 verticalSpeed += speed/10;
@@ -42,6 +44,9 @@ namespace MarioPlatformer
                 position.Y += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             position.Y -= verticalSpeed;
+
+            position += velocity * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
+
     }
 }

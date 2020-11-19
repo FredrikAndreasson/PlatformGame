@@ -107,7 +107,7 @@ namespace MarioPlatformer
                 if(insideLevel)
                 {
                     int type = (int)((selectedPaletteIndex.X) + (selectedPaletteIndex.Y * palette.Columns));
-                    tiles[mouseTile] = new Tile(selectedPalette, mouseTile, (TileType)type);
+                    tiles[mouseTile] = new Tile(selectedPalette, null, mouseTile, (TileType)type);
                 }
                 else
                 {

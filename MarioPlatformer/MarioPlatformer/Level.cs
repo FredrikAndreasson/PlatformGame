@@ -39,7 +39,7 @@ namespace MarioPlatformer
                 sheet.XIndex = sx;
                 sheet.YIndex = sy;
 
-                tiles[i] = new Tile(sheet, tile.Position, tile.Type);
+                tiles[i] = new Tile(sheet, this, tile.Position, tile.Type);
             }
         }
 

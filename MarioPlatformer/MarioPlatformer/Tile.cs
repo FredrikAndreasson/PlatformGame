@@ -11,7 +11,7 @@ namespace MarioPlatformer
 
         private TileType type;
 
-        public Tile(SpriteSheet spritesheet, Vector2 position, TileType type) : base(spritesheet, position, new Vector2(SIZE))
+        public Tile(SpriteSheet spritesheet, Level level, Vector2 position, TileType type) : base(spritesheet, level, position, new Vector2(SIZE))
         {
             this.type = type;
         }

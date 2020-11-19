@@ -8,7 +8,7 @@ namespace MarioPlatformer
     abstract class Enemy : Character
     {
 
-        public Enemy(SpriteSheet texture, Vector2 position,Vector2 size, int health, float speed) : base(texture, position,size, health, speed)
+        public Enemy(SpriteSheet texture, Level level, Vector2 position,Vector2 size, int health, float speed) : base(texture, level, position, size, health, speed)
         {
             
         }

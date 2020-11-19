@@ -48,7 +48,7 @@ namespace MarioPlatformer
                     float x = reader.ReadSingle();
                     float y = reader.ReadSingle();
                     TileType type = (TileType)value;
-                    tiles[i] = new Tile(null, new Vector2(x,y), type);
+                    tiles[i] = new Tile(null, null, new Vector2(x,y), type);
                 }
 
                 data = new LevelData(spritesPath, tiles);

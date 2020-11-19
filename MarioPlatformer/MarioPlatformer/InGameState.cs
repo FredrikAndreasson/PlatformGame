@@ -24,14 +24,14 @@ namespace MarioPlatformer
             Texture2D backgroundTex = loader.LoadTexture("background");
             Texture2D background2Tex = loader.LoadTexture("background2");
 
-            this.debugTexture = loader.CreateRectangleTexture((int)(Tile.SIZE * Game1.Scale.X), (int)(Tile.SIZE * Game1.Scale.Y), new Color(0, 255, 0, 255));
+            this.debugTexture = loader.CreateRectangleTexture((int)(Tile.SIZE * Game1.Scale.X), (int)(Tile.SIZE * Game1.Scale.Y), new Color(255, 255, 255, 255));
+            this.level = new Level(loader, LevelData.LoadLevelData("Content\\Level1.lvl"));
 
-            this.player = new Player(playerAnimationSheet, new Vector2(250, 250), new Vector2(12, 16), 5, 500.0f);
+            this.player = new Player(playerAnimationSheet, level, new Vector2(0,0), new Vector2(16, 16), 5, 500.0f);
             this.camera = new Camera(graphicsDevice.Viewport);
             this.background = new ScrollingBackground(backgroundTex, new Rectangle(0, 0, window.ClientBounds.Width, window.ClientBounds.Height));
             this.background2 = new ScrollingBackground(background2Tex, new Rectangle(0, 0, window.ClientBounds.Width, window.ClientBounds.Height));
 
-            this.level = new Level(loader, LevelData.LoadLevelData("Content\\Level1.lvl"));
         }
         public override void Update(GameTime gameTime)
         {
@@ -62,10 +62,15 @@ namespace MarioPlatformer
             {
                 foreach (Tile tile in level.Tiles)
                 {
-                    spriteBatch.Draw(debugTexture, tile.Bounds, Color.White);
+                    spriteBatch.Draw(debugTexture, tile.Bounds, new Color(0, 255, 0, 255));
                 }
-                spriteBatch.Draw(debugTexture, player.Bounds, Color.White);
+                spriteBatch.Draw(debugTexture, player.Bounds, new Color(0,255,0,255));
 
+                GameObject collider = player.GetCollider(level.Tiles);
+                if(collider != null)
+                {
+                    spriteBatch.Draw(debugTexture, collider.Bounds, new Color(255, 0, 0, 255));
+                }
             }
             
             spriteBatch.End();

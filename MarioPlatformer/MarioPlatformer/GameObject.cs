@@ -10,12 +10,14 @@ namespace MarioPlatformer
     abstract class GameObject
     {
         protected SpriteSheet texture;
+        protected Level level;
         protected Vector2 position;
         protected Vector2 size;
 
-        public GameObject(SpriteSheet texture, Vector2 position, Vector2 size)
+        public GameObject(SpriteSheet texture, Level level, Vector2 position, Vector2 size)
         {
             this.texture = texture;
+            this.level = level;
             this.position = position;
             this.size = size;
         }
