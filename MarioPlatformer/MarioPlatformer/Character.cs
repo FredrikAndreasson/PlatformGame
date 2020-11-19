@@ -24,12 +24,17 @@ namespace MarioPlatformer
         {
             if(GetCollider(level.Tiles) == null)
             {
-                velocity.Y += 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds * 0.05f;
+                velocity.Y += 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else
             {
                 velocity.Y = 0f;
             }
+        }
+
+        protected void UpdateVelocity(GameTime gameTime)
+        {
+            position += velocity * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public GameObject GetCollider(GameObject[] colliders)

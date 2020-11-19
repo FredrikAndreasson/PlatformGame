@@ -16,36 +16,27 @@ namespace MarioPlatformer
 
         public override void Update(GameTime gameTime)
         {
+
             UpdateGravity(gameTime);
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Space)&& verticalSpeed == 0)
-            {
-                verticalSpeed += speed/10;
-
-            }
-            if (verticalSpeed > 0)
-            {
-                verticalSpeed -= 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                position.X -= speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                velocity.X = -1;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            else if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                position.X += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                velocity.X = 1;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            else if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                position.Y -= speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                velocity.Y = -1;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            else if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                position.Y += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                velocity.Y = 1;
             }
-            position.Y -= verticalSpeed;
 
-            position += velocity * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
+            UpdateVelocity(gameTime);
         }
 
     }
