@@ -12,10 +12,15 @@ namespace MarioPlatformer
 
         protected float verticalSpeed;
 
-        public Character(SpriteSheet texture, Vector2 position, int health, float speed) : base(texture, position)
+        public Character(SpriteSheet texture, Vector2 position,Vector2 size, int health, float speed) : base(texture, position, size)
         {
             this.health = health;
             this.speed = speed;
+        }
+
+        protected void HandleGravity()
+        {
+
         }
 
         public abstract void Update(GameTime gameTime);

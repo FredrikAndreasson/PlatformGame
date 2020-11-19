@@ -11,7 +11,7 @@ namespace MarioPlatformer
 
         private LevelData levelData;
         private SpriteSheet spritesheet;
-
+        
         private Tile[] tiles;
 
         private bool isDay = false;
@@ -19,15 +19,19 @@ namespace MarioPlatformer
         public Level(SpriteSheetLoader loader, LevelData levelData)
         {
             this.levelData = levelData;
-
+            
             Create(loader);
         }
 
+<<<<<<< HEAD
         public bool IsDay => isDay;
+=======
+        public Tile[] Tiles => tiles;
+>>>>>>> 887849218d8c954490a72658733303e85db275e8
 
         private void Create(SpriteSheetLoader loader)
         {
-            this.spritesheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(80,80), new Vector2(16, 16), 0);
+            this.spritesheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(16, 16), 0);
 
             this.tiles = new Tile[levelData.Size];
             for(int i = 0; i < tiles.Length;i++)
@@ -37,7 +41,7 @@ namespace MarioPlatformer
                 int sx = (int)tile.Type % spritesheet.Columns;
                 int sy = (int)tile.Type / spritesheet.Columns;
 
-                SpriteSheet sheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(80, 80), new Vector2(16, 16), 0);
+                SpriteSheet sheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(16, 16), 0);
                 sheet.XIndex = sx;
                 sheet.YIndex = sy;
 
@@ -49,13 +53,11 @@ namespace MarioPlatformer
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //spritesheet.Sprite.Draw(spriteBatch, Vector2.Zero, Vector2.One);
-
             foreach(Tile tile in tiles)
             {
                 tile.Draw(spriteBatch);
             }
         }
-
+        
     }
 }

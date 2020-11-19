@@ -11,14 +11,18 @@ namespace MarioPlatformer
     {
         protected SpriteSheet texture;
         protected Vector2 position;
+        protected Vector2 size;
 
-        public GameObject(SpriteSheet texture, Vector2 position)
+        public GameObject(SpriteSheet texture, Vector2 position, Vector2 size)
         {
             this.texture = texture;
             this.position = position;
+            this.size = size;
         }
 
         public Vector2 Position => position;
+
+        public Rectangle Bounds => new Rectangle((int)Position.X, (int)Position.Y, (int)(size.X * Game1.Scale.X), (int)(size.Y * Game1.Scale.Y));
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {

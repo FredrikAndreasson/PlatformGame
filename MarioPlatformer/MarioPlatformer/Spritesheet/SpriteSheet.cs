@@ -22,6 +22,9 @@ namespace MarioPlatformer
             this.start = Vector2.Zero;
             this.spriteSize = new Vector2(texture.Width, texture.Height);
             this.internalSprite = new Sprite(texture, start, spriteSize);
+
+            this.columns = 1;
+            this.rows = 1;
         }
 
         public SpriteSheet(Texture2D texture, Vector2 start, Vector2 dimensions, Vector2 spriteSize, int offset = 0)
@@ -77,6 +80,11 @@ namespace MarioPlatformer
         {
             Vector2 position = new Vector2(start.X + (spriteSize.X * x) + (offset * x), start.Y + (spriteSize.Y * y) + (offset * y));
             return new Sprite(Texture, position, spriteSize);
+        }
+
+        public SpriteSheet GetSubAt(int x, int y, int width, int height)
+        {
+            return new SpriteSheet(Texture, new Vector2(start.X + (x * spriteSize.X), start.Y + (y * spriteSize.Y)), new Vector2(width * spriteSize.X, height * spriteSize.Y), spriteSize, offset);
         }
         
         public Sprite Sprite
