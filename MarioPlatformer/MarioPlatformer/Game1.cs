@@ -70,6 +70,7 @@ namespace MarioPlatformer
 
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(Color.Transparent);
             gameState.Draw(spriteBatch);
         }
     }

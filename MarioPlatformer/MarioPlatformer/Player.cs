@@ -26,7 +26,11 @@ namespace MarioPlatformer
             {
                 velocity.X = 1;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.W))
+            else
+            {
+                velocity.X = 0;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 velocity.Y = -1;
             }
