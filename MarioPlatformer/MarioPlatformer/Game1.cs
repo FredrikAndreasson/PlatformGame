@@ -7,7 +7,7 @@ namespace MarioPlatformer
 {
     public class Game1 : Game
     {
-        public static Vector2 Scale = new Vector2(3,3);
+        public static Vector2 Scale = new Vector2(2,2);
 
         private GraphicsDeviceManager Graphics;
         private SpriteBatch spriteBatch;
@@ -30,16 +30,7 @@ namespace MarioPlatformer
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
-            Tile[] tiles = new Tile[4];
-            tiles[0] = new Tile(null, new Vector2(0, 0), TileType.Empty);
-            tiles[1] = new Tile(null, new Vector2(16 * 3, 0), TileType.Block1);
-            tiles[2] = new Tile(null, new Vector2(32 * 3, 0), TileType.Block2);
-            tiles[3] = new Tile(null, new Vector2(0, 16 * 3), TileType.Block2);
-            LevelData data = new LevelData(@"blocks", tiles);
-
-            LevelData.SaveData(data, "Content\\Level1.lvl");
-
+            
             Graphics.PreferredBackBufferWidth = 1280;
             Graphics.PreferredBackBufferHeight = 900;
 
@@ -62,8 +53,8 @@ namespace MarioPlatformer
 
             inGameState = new InGameState(spritesheetLoader, GraphicsDevice, Window);
             editor = new Editor(spritesheetLoader, Window);
-            //gameState = inGameState;
-            gameState = editor;
+            gameState = inGameState;
+            //gameState = editor;
 
         }
 

@@ -26,7 +26,8 @@ namespace MarioPlatformer
         private Vector2 selectedPaletteIndex;
         private Sprite selectionSprite;
 
-        private Point oldMousePosition;        
+        private Point oldMousePosition;
+        private KeyboardState oldKeyboardState;
 
         public Editor(SpriteSheetLoader loader, GameWindow window)
         {
@@ -36,7 +37,7 @@ namespace MarioPlatformer
 
             this.mouseTile = GetTileOnCursor();
 
-            this.palette = loader.LoadSpriteSheet("blocks", Vector2.Zero, new Vector2(80, 80), new Vector2(16, 16), 0);
+            this.palette = loader.LoadSpriteSheet("blocks", Vector2.Zero, new Vector2(16, 16), 0);
             this.paletteBackground = loader.CreateFilledTexture(1, 1, new Color(10, 10, 10));
             this.viewportSplit = loader.CreateFilledTexture(1, 1, new Color(128, 128, 128));
             this.viewportLineSplitWidth = 1;
@@ -55,7 +56,7 @@ namespace MarioPlatformer
             return this.palette.GetSubAt(x, y, 1, 1);
         }
         
-        public Vector2 GetTileOnCursor()
+        private Vector2 GetTileOnCursor()
         {
             Vector2 translation = new Vector2(camera.Transform.Translation.X, camera.Transform.Translation.Y);
             Vector2 mousePos = Mouse.GetState().Position.ToVector2();
@@ -64,7 +65,7 @@ namespace MarioPlatformer
             return tilePos;
         }
 
-        public Vector2 GetPaletteOnCursor()
+        private Vector2 GetPaletteOnCursor()
         {
             Vector2 mousePos = Mouse.GetState().Position.ToVector2();            
             Vector2 palettePos = new Vector2(paletteViewport.X, paletteViewport.Y);
@@ -73,13 +74,33 @@ namespace MarioPlatformer
             return tilePos;
         }
 
+        private LevelData CreateLevelData()
+        {
+            Tile[] tilesData = new Tile[tiles.Count];
+            tiles.Values.CopyTo(tilesData, 0);
+            LevelData data = new LevelData("blocks", tilesData);
+            return data;
+        }
+
         public override void Update(GameTime gameTime)
         {
             mouseTile = GetTileOnCursor() * Tile.SIZE * Game1.Scale;
             paletteTile = GetPaletteOnCursor();
+            KeyboardState keyboardState = Keyboard.GetState();
             Point mousePos = Mouse.GetState().Position;
 
             bool insideLevel = levelViewport.Bounds.Contains(mousePos);
+
+            if(oldKeyboardState == null)
+            {
+                oldKeyboardState = keyboardState;
+            }
+
+            if(keyboardState.IsKeyDown(Keys.LeftControl) && keyboardState.IsKeyDown(Keys.S) && !oldKeyboardState.IsKeyDown(Keys.S))
+            {
+                LevelData.SaveData(CreateLevelData(), "Content\\Level1.lvl");
+                System.Diagnostics.Debug.WriteLine("Level1 saved");
+            }
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
@@ -115,7 +136,9 @@ namespace MarioPlatformer
                 transform.Translation = translation;
                 camera.Transform = transform;
             }
+
             oldMousePosition = mousePos;
+            oldKeyboardState = keyboardState;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

@@ -9,7 +9,7 @@ namespace MarioPlatformer
     class Player : Character
     {
 
-        public Player(SpriteSheet texture, Vector2 position, int health, float speed) : base(texture, position, health, speed)
+        public Player(SpriteSheet texture, Vector2 position,Vector2 size, int health, float speed) : base(texture, position,size, health, speed)
         {
 
         }

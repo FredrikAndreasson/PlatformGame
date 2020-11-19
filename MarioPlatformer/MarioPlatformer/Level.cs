@@ -11,19 +11,21 @@ namespace MarioPlatformer
 
         private LevelData levelData;
         private SpriteSheet spritesheet;
-
+        
         private Tile[] tiles;
 
         public Level(SpriteSheetLoader loader, LevelData levelData)
         {
             this.levelData = levelData;
-
+            
             Create(loader);
         }
 
+        public Tile[] Tiles => tiles;
+
         private void Create(SpriteSheetLoader loader)
         {
-            this.spritesheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(80,80), new Vector2(16, 16), 0);
+            this.spritesheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(16, 16), 0);
 
             this.tiles = new Tile[levelData.Size];
             for(int i = 0; i < tiles.Length;i++)
@@ -33,7 +35,7 @@ namespace MarioPlatformer
                 int sx = (int)tile.Type % spritesheet.Columns;
                 int sy = (int)tile.Type / spritesheet.Columns;
 
-                SpriteSheet sheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(80, 80), new Vector2(16, 16), 0);
+                SpriteSheet sheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(16, 16), 0);
                 sheet.XIndex = sx;
                 sheet.YIndex = sy;
 
@@ -48,6 +50,6 @@ namespace MarioPlatformer
                 tile.Draw(spriteBatch);
             }
         }
-
+        
     }
 }

@@ -39,6 +39,12 @@ namespace MarioPlatformer
             return new SpriteSheet(texture, start, dimensions, spriteSize, offset);
         }
 
+        public SpriteSheet LoadSpriteSheet(string name, Vector2 start, Vector2 spriteSize, int offset = 0)
+        {
+            Texture2D texture = LoadTexture(name);
+            return new SpriteSheet(texture, start, new Vector2(texture.Width, texture.Height), spriteSize, offset);
+        }
+
         public Texture2D CreateRectangleTexture(int width, int height, Color lineColor)
         {
             Texture2D texture = new Texture2D(graphicsDevice, width, height);
