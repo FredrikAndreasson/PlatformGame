@@ -13,7 +13,7 @@ namespace MarioPlatformer
         private Rectangle source;
         private float layerMultiplier;
 
-        public ScrollingBackground(Texture2D background, Rectangle destinationRect, float layerMultiplier)
+        public ScrollingBackground(Texture2D background, Rectangle destinationRect, float layerMultiplier, int sourceOffsetY)
         {
             //int levelWidth... get width of level so that the background width can be scaled accordingly instead of *3
 
@@ -21,7 +21,7 @@ namespace MarioPlatformer
             this.destinationRect = destinationRect;
             this.destinationRect.Width *= 3; // *= levelWidth...
             source = this.destinationRect;
-
+            source.Y += sourceOffsetY;
             this.layerMultiplier = layerMultiplier;
         }
 

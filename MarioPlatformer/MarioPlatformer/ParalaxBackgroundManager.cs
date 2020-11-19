@@ -33,15 +33,17 @@ namespace MarioPlatformer
             Texture2D daySkyTex = loader.LoadTexture("Backgrounds\\DaySky");
 
 
-            dayBackgrounds.Add(new ScrollingBackground(cloudsTex, new Rectangle(0, 0, window.ClientBounds.Width, cloudsTex.Height), 0.5f));
-            dayBackgrounds.Add(new ScrollingBackground(dayHillTex, new Rectangle(0, 0, window.ClientBounds.Width, dayHillTex.Height), 0.3f));
-            dayBackgrounds.Add(new ScrollingBackground(dayHillBackTex, new Rectangle(0, 0, window.ClientBounds.Width, dayHillBackTex.Height), 0.25f));
-            dayBackgrounds.Add(new ScrollingBackground(daySkyTex, new Rectangle(0, 0, window.ClientBounds.Width, daySkyTex.Height), 0.1f));
+            
+            
+            dayBackgrounds.Add(new ScrollingBackground(dayHillBackTex, new Rectangle(0, window.ClientBounds.Height - dayHillBackTex.Height, window.ClientBounds.Width, (int)(dayHillBackTex.Height)), 0.25f,-4));
+            dayBackgrounds.Add(new ScrollingBackground(dayHillTex, new Rectangle(-100, window.ClientBounds.Height - dayHillTex.Height+30, window.ClientBounds.Width, (int)(dayHillTex.Height)), 0.3f, -34));
+            dayBackgrounds.Add(new ScrollingBackground(daySkyTex, new Rectangle(0, 0, window.ClientBounds.Width, daySkyTex.Height), 0.1f,0));
+            dayBackgrounds.Add(new ScrollingBackground(cloudsTex, new Rectangle(0, 0, window.ClientBounds.Width, cloudsTex.Height), 0.5f, 0));
 
-            nightBackgrounds.Add(new ScrollingBackground(nightHillBackTex, new Rectangle(0, window.ClientBounds.Height - nightHillBackTex.Height, window.ClientBounds.Width, (int)(nightHillBackTex.Height*0.8)), 0.25f));
-            nightBackgrounds.Add(new ScrollingBackground(nightHillTex, new Rectangle(-100, window.ClientBounds.Height - nightHillTex.Height, window.ClientBounds.Width, (int)(nightHillTex.Height*0.8)), 0.3f));
-            nightBackgrounds.Add(new ScrollingBackground(nightSkyTex, new Rectangle(0, 0, window.ClientBounds.Width, nightSkyTex.Height), 0.1f));
-            nightBackgrounds.Add(new ScrollingBackground(moonTex, new Rectangle((int)(window.ClientBounds.Width*0.8), (int)(window.ClientBounds.Height * 0.1), moonTex.Width/3, moonTex.Height), 0.0f));
+            nightBackgrounds.Add(new ScrollingBackground(nightHillBackTex, new Rectangle(0, window.ClientBounds.Height - nightHillBackTex.Height, window.ClientBounds.Width, (int)(nightHillBackTex.Height)), 0.25f, -4));
+            nightBackgrounds.Add(new ScrollingBackground(nightHillTex, new Rectangle(-100, window.ClientBounds.Height - nightHillTex.Height + 30, window.ClientBounds.Width, (int)(nightHillTex.Height)), 0.3f, -34));
+            nightBackgrounds.Add(new ScrollingBackground(nightSkyTex, new Rectangle(0, 0, window.ClientBounds.Width, nightSkyTex.Height), 0.1f, 0));
+            nightBackgrounds.Add(new ScrollingBackground(moonTex, new Rectangle((int)(window.ClientBounds.Width*0.8), (int)(window.ClientBounds.Height * 0.01), moonTex.Width/3, moonTex.Height), 0.1f,0));
         }
 
         public void Update(bool isDay)

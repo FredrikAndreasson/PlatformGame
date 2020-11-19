@@ -23,11 +23,11 @@ namespace MarioPlatformer
             Create(loader);
         }
 
-<<<<<<< HEAD
+
         public bool IsDay => isDay;
-=======
+
         public Tile[] Tiles => tiles;
->>>>>>> 887849218d8c954490a72658733303e85db275e8
+
 
         private void Create(SpriteSheetLoader loader)
         {
