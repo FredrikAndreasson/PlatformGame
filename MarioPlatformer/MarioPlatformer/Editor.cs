@@ -43,7 +43,7 @@ namespace MarioPlatformer
             this.viewportLineSplitWidth = 1;
             this.selectedPaletteIndex = new Vector2(0,0);
             this.selectedPalette = GetSpriteSheetAt((int)selectedPaletteIndex.X, (int)selectedPaletteIndex.Y);
-            
+
             this.levelViewport = new Viewport(0, 0, window.ClientBounds.Width - this.palette.Texture.Width, window.ClientBounds.Height);
             this.paletteViewport = new Viewport(levelViewport.Width, 0, this.palette.Texture.Width, window.ClientBounds.Height);
 
@@ -69,7 +69,7 @@ namespace MarioPlatformer
         {
             Vector2 mousePos = Mouse.GetState().Position.ToVector2();            
             Vector2 palettePos = new Vector2(paletteViewport.X, paletteViewport.Y);
-            Vector2 tilePos = (mousePos - palettePos + new Vector2(viewportLineSplitWidth, 0)) / Tile.SIZE;
+            Vector2 tilePos = (mousePos - palettePos + new Vector2(0, 0)) / Tile.SIZE;
             tilePos.Floor();
             return tilePos;
         }
@@ -107,7 +107,7 @@ namespace MarioPlatformer
                 if(insideLevel)
                 {
                     int type = (int)((selectedPaletteIndex.X) + (selectedPaletteIndex.Y * palette.Columns));
-                    tiles[mouseTile] = new Tile(selectedPalette, null, mouseTile, (TileType)type);
+                    tiles[mouseTile] = new Tile(selectedPalette, null, mouseTile, type);
                 }
                 else
                 {

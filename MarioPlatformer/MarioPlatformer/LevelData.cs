@@ -7,13 +7,7 @@ using System.Text;
 namespace MarioPlatformer
 {
 
-    public enum TileType
-    {
-        Empty,
-        Block1,
-        Block2,
-        Block3,
-    }
+    
 
     class LevelData
     {
@@ -47,7 +41,7 @@ namespace MarioPlatformer
                     int value = reader.ReadInt32();
                     float x = reader.ReadSingle();
                     float y = reader.ReadSingle();
-                    TileType type = (TileType)value;
+                    int type = value;
                     tiles[i] = new Tile(null, null, new Vector2(x,y), type);
                 }
 
@@ -66,7 +60,7 @@ namespace MarioPlatformer
                 for(int i = 0; i < levelData.Size; i++)
                 {
                     Tile tile = levelData.tiles[i];
-                    writer.Write((int)tile.Type);
+                    writer.Write((int)tile.IDType);
                     writer.Write(tile.Position.X);
                     writer.Write(tile.Position.Y);
                 }

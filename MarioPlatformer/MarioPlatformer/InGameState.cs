@@ -21,6 +21,9 @@ namespace MarioPlatformer
         private bool debug = true;
         private Texture2D debugTexture;
 
+        List<ShootingObstacle> shootingObstacles = new List<ShootingObstacle>();
+        List<Enemy> Enemies = new List<Enemy>();
+
 
         public InGameState(SpriteSheetLoader loader, GraphicsDevice graphicsDevice, GameWindow window)
         {
@@ -38,6 +41,17 @@ namespace MarioPlatformer
 
             backgroundManager = new ParalaxBackgroundManager(player, loader, graphicsDevice, window);
 
+            for (int i = 0; i < level.Tiles.Length; i++)
+            {
+                if (level.Tiles[i].IDType == 90)
+                {
+                    int direction = Game1.random.Next(2);
+                    direction = direction == 1 ? -1 : 1;
+                    shootingObstacles.Add(new ShootingObstacle(loader.LoadSpriteSheet("Obstacles\\canon", Vector2.Zero, new Vector2(16, 16), 0),level,level.Tiles[i].Position,new Vector2(16*Game1.Scale.X,16*Game1.Scale.Y),new Vector2(direction, 0),loader.LoadSpriteSheet("Obstacles\\bullet",Vector2.Zero,new Vector2(16,13),0)));
+                }
+            }
+            Enemies.Add(new Enemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(20, 36)),level, new Vector2(100,0),new Vector2(20,36), 5, 5.0f));
+
         }
         public override void Update(GameTime gameTime)
         {
@@ -47,6 +61,15 @@ namespace MarioPlatformer
             camera.SetPosition(player.Position);
 
             backgroundManager.Update(level.IsDay);
+
+            foreach (ShootingObstacle canon in shootingObstacles)
+            {
+                canon.Update(gameTime);
+            }
+            foreach (Enemy enemy in Enemies)
+            {
+                enemy.Update(gameTime);
+            }
 
         }
 
@@ -63,8 +86,17 @@ namespace MarioPlatformer
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, camera.Transform);
             player.Draw(spriteBatch);
             level.Draw(spriteBatch);
+            foreach (ShootingObstacle canon in shootingObstacles)
+            {
+                canon.Draw(spriteBatch);
+            }
+            foreach (Enemy enemy in Enemies)
+            {
+                enemy.Draw(spriteBatch);
+            }
 
-            if(debug)
+
+            if (debug)
             {
                 foreach (Tile tile in level.Tiles)
                 {

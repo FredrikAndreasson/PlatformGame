@@ -9,14 +9,14 @@ namespace MarioPlatformer
     {
         public static readonly int SIZE = 16;
 
-        private TileType type;
+        private int ID;
 
-        public Tile(SpriteSheet spritesheet, Level level, Vector2 position, TileType type) : base(spritesheet, level, position, new Vector2(SIZE))
+        public Tile(SpriteSheet spritesheet, Level level, Vector2 position, int ID) : base(spritesheet, level, position, new Vector2(SIZE))
         {
-            this.type = type;
+            this.ID = ID;
         }
 
-        public TileType Type => type;
+        public int IDType => ID; // basically index in spriteSheet; canon would be index 90 in total AKA type 90
         
     }
 }
