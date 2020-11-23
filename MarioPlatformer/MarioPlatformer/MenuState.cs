@@ -59,11 +59,13 @@ namespace MarioPlatformer
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
             for(int i = 0; i < Actions.Count; i++)
             {
                 Color color = i == selectedActionIndex ? Color.Blue : Color.White;
                 spriteBatch.DrawString(font, Actions[i].Text, new Vector2(-100, (i * font.MeasureString(Actions[i].Text).Y) + 10), color);
             }
+            spriteBatch.End();
         }
     }
 

@@ -7,6 +7,8 @@ namespace MarioPlatformer
 {
     public class Game1 : Game
     {
+
+        public static Random random = new Random();
         public static Vector2 Scale = new Vector2(2,2);
 
         private GraphicsDeviceManager Graphics;

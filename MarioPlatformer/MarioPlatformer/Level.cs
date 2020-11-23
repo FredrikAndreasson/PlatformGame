@@ -14,7 +14,7 @@ namespace MarioPlatformer
         
         private Tile[] tiles;
 
-        private bool isDay = false;
+        private bool isDay = true;
 
         public Level(SpriteSheetLoader loader, LevelData levelData)
         {
@@ -38,14 +38,14 @@ namespace MarioPlatformer
             {
                 Tile tile = levelData.Tiles[i];
 
-                int sx = (int)tile.Type % spritesheet.Columns;
-                int sy = (int)tile.Type / spritesheet.Columns;
+                int sx = (int)tile.IDType % spritesheet.Columns;
+                int sy = (int)tile.IDType / spritesheet.Columns;
 
                 SpriteSheet sheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(16, 16), 0);
                 sheet.XIndex = sx;
                 sheet.YIndex = sy;
 
-                tiles[i] = new Tile(sheet, this, tile.Position, tile.Type);
+                tiles[i] = new Tile(sheet, this, tile.Position, tile.IDType);
             }
         }
 
