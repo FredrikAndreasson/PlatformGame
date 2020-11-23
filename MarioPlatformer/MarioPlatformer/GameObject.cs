@@ -24,7 +24,74 @@ namespace MarioPlatformer
 
         public Vector2 Position => position;
 
+        public Vector2 Size => size;
+
         public Rectangle Bounds => new Rectangle((int)Position.X, (int)Position.Y, (int)(size.X * Game1.Scale.X), (int)(size.Y * Game1.Scale.Y));
+        
+        public GameObject[] GetColliders(GameObject[] colliders)
+        {
+            return GetColliders(colliders, Bounds);
+        }
+
+        public GameObject[] GetColliders(GameObject[] colliders, Rectangle bounds)
+        {
+            List<GameObject> collidingObjects = new List<GameObject>();
+            foreach (GameObject collider in colliders)
+            {
+                if (bounds.Intersects(collider.Bounds))
+                {
+                    collidingObjects.Add(collider);
+                }
+            }
+            return collidingObjects.ToArray();
+        }
+
+        public bool IsOnTopOf(GameObject collider)
+        {
+            int yDistance = collider.Bounds.Top - Bounds.Bottom;
+            int leftDistance = Bounds.Right - collider.Bounds.Left;
+            int rightDistance = collider.Bounds.Right - Bounds.Left;
+            if (yDistance >= -10 && leftDistance >= 5 && rightDistance >= 5)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsBelow(GameObject collider)
+        {
+            int yDistance = Bounds.Top - collider.Bounds.Bottom;
+            int leftDistance = Bounds.Right - collider.Bounds.Left;
+            int rightDistance = collider.Bounds.Right - Bounds.Left;
+            if (yDistance <= 10 && leftDistance >= 5 && rightDistance >= 5)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        public bool IsLeftOf(GameObject collider)
+        {
+            int xDistance = collider.Bounds.Left - Bounds.Right;
+            int topDistance = Bounds.Bottom - collider.Bounds.Top;
+            if (xDistance >= -10 && topDistance >= 5)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsRightOf(GameObject collider)
+        {
+            int xDistance = collider.Bounds.Right - Bounds.Left;
+            int topDistance = Bounds.Bottom - collider.Bounds.Top;
+            if (xDistance <= 5 && topDistance >= 5)
+            {
+                return true;
+            }
+            return false;
+        }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
