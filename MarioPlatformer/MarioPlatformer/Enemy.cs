@@ -8,15 +8,13 @@ namespace MarioPlatformer
 {
     class Enemy : Character
     {
-        Vector2 direction;
-
         private float msSinceLastFrame;
-        private float msPerFrame;
+        private float msPerFrame = 200;
 
         public Enemy(SpriteSheet texture, Level level, Vector2 position, Vector2 size, int health, float speed) : base(texture, level, position, size, health, speed)
         {
-            direction.X = Game1.random.Next(2);
-            direction.X = direction.X == 1 ? -1 : 1;
+            velocity.X = Game1.random.Next(2);
+            velocity.X = velocity.X == 1 ? -1 : 1;
         }
 
         public void UpdateAnimation(GameTime gameTime)
@@ -32,10 +30,16 @@ namespace MarioPlatformer
             }
         }
 
+        public Vector2 ChangeDirection(Vector2 velocity)
+        {
+
+            return Vector2.Zero;
+        }
+
         public override void Update(GameTime gameTime)
         {
             UpdateGravity(gameTime);
-            velocity = direction;
+            
 
             UpdateVelocity(gameTime);
         }

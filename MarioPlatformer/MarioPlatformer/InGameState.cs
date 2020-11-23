@@ -50,7 +50,7 @@ namespace MarioPlatformer
                     shootingObstacles.Add(new ShootingObstacle(loader.LoadSpriteSheet("Obstacles\\canon", Vector2.Zero, new Vector2(16, 16), 0),level,level.Tiles[i].Position,new Vector2(16*Game1.Scale.X,16*Game1.Scale.Y),new Vector2(direction, 0),loader.LoadSpriteSheet("Obstacles\\bullet",Vector2.Zero,new Vector2(16,13),0)));
                 }
             }
-            Enemies.Add(new Enemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(20, 36)),level, new Vector2(100,0),new Vector2(20,36), 5, 5.0f));
+            Enemies.Add(new Enemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 36)),level, new Vector2(100,0),new Vector2(15,36), 5, 30.0f));
 
         }
         public override void Update(GameTime gameTime)
