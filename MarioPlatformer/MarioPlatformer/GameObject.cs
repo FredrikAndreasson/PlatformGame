@@ -60,7 +60,7 @@ namespace MarioPlatformer
 
         public bool IsBelow(GameObject collider)
         {
-            int yDistance = Bounds.Top - collider.Bounds.Bottom;
+            int yDistance = collider.Bounds.Bottom - Bounds.Top;
             int leftDistance = Bounds.Right - collider.Bounds.Left;
             int rightDistance = collider.Bounds.Right - Bounds.Left;
             if (yDistance <= 10 && leftDistance >= 5 && rightDistance >= 5)

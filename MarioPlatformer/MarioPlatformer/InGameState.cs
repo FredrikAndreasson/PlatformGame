@@ -85,7 +85,7 @@ namespace MarioPlatformer
             Color day = new Color(192, 2248, 248);
             Color night = new Color(0, 0, 24);
             graphicsDevice.Clear(level.IsDay ? day : night);
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null, null);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null);
             backgroundManager.Draw(spriteBatch);
             spriteBatch.End();
 
@@ -107,7 +107,7 @@ namespace MarioPlatformer
             {
                 foreach (Tile tile in level.Tiles)
                 {
-                    spriteBatch.Draw(debugTexture, tile.Bounds, new Color(0, 255, 0, 255));
+                    spriteBatch.Draw(debugTexture, tile.Bounds, new Color(0, 255, 0, 128));
                 }
                 spriteBatch.Draw(debugTexture, playerBounds, new Color(0,255,0,255));
 
@@ -121,9 +121,14 @@ namespace MarioPlatformer
                 GameObject[] colliders = player.GetColliders(level.Tiles);
                 foreach(GameObject collider in colliders)
                 {
-                    if (collider != null && player.IsOnTopOf(collider))
+                    if (collider != null)
                     {
-                        spriteBatch.Draw(debugTexture, collider.Bounds, new Color(255, 0, 0, 255));
+                        if (player.IsOnTopOf(collider))
+                        {
+                            spriteBatch.Draw(lineTexture, new Rectangle(collider.Bounds.X, collider.Bounds.Y, collider.Bounds.Width, 5), new Color(255, 0, 0, 255));
+                        }
+
+                        //spriteBatch.Draw(debugTexture, collider.Bounds, new Color(255, 0, 0, 128));
                     }
                 }
             }

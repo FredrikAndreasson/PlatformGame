@@ -12,9 +12,7 @@ namespace MarioPlatformer
         
         protected Vector2 velocity;
         protected Vector2 direction;
-
-        protected GameObject[] colliders;
-
+        
         public Character(SpriteSheet texture, Level level, Vector2 position, Vector2 size, int health, float speed) : base(texture, level, position, size)
         {
             this.health = health;
