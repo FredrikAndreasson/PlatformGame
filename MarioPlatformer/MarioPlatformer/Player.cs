@@ -40,7 +40,6 @@ namespace MarioPlatformer
 
         protected override void InternalUpdateAnimation(GameTime gameTime)
         {
-            this.currentSpriteSheet.XIndex++;
 
             if(!doneJumping)
             {
