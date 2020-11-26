@@ -84,9 +84,14 @@ namespace MarioPlatformer
 
         public SpriteSheet GetSubAt(int x, int y, int width, int height)
         {
+            return GetSubAt(x, y, width, height, spriteSize);
+        }
+
+        public SpriteSheet GetSubAt(int x, int y, int width, int height, Vector2 spriteSize)
+        {
             return new SpriteSheet(Texture, new Vector2(start.X + (x * spriteSize.X), start.Y + (y * spriteSize.Y)), new Vector2(width * spriteSize.X, height * spriteSize.Y), spriteSize, offset);
         }
-        
+
         public Sprite Sprite
         {
             get

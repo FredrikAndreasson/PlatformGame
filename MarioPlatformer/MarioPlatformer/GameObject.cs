@@ -9,14 +9,14 @@ namespace MarioPlatformer
 {
     abstract class GameObject
     {
-        protected SpriteSheet texture;
+        protected SpriteSheet currentSpriteSheet;
         protected Level level;
         protected Vector2 position;
         protected Vector2 size;
 
         public GameObject(SpriteSheet texture, Level level, Vector2 position, Vector2 size)
         {
-            this.texture = texture;
+            this.currentSpriteSheet = texture;
             this.level = level;
             this.position = position;
             this.size = size;
@@ -49,9 +49,9 @@ namespace MarioPlatformer
         public bool IsOnTopOf(GameObject collider)
         {
             int yDistance = collider.Bounds.Top - Bounds.Bottom;
-            int leftDistance = Bounds.Right - collider.Bounds.Left;
-            int rightDistance = collider.Bounds.Right - Bounds.Left;
-            if (yDistance >= -10 && leftDistance >= 5 && rightDistance >= 5)
+            int leftDistance = collider.Bounds.Left - Bounds.Right;
+            int rightDistance = Bounds.Left - collider.Bounds.Right;
+            if (yDistance >= -5 && leftDistance <= -5 && rightDistance <= -5)
             {
                 return true;
             }
@@ -73,9 +73,10 @@ namespace MarioPlatformer
 
         public bool IsLeftOf(GameObject collider)
         {
-            int xDistance = collider.Bounds.Left - Bounds.Right;
-            int topDistance = Bounds.Bottom - collider.Bounds.Top;
-            if (xDistance >= -10 && topDistance >= 5)
+            int leftDistance = Bounds.Left - collider.Bounds.Right;
+            int rightDistance = Bounds.Right - collider.Bounds.Right;
+            int topDistance = collider.Bounds.Top - Bounds.Bottom;
+            if (leftDistance <= 0 && rightDistance > 0 && topDistance <= -5)
             {
                 return true;
             }
@@ -84,9 +85,10 @@ namespace MarioPlatformer
 
         public bool IsRightOf(GameObject collider)
         {
-            int xDistance = collider.Bounds.Right - Bounds.Left;
-            int topDistance = Bounds.Bottom - collider.Bounds.Top;
-            if (xDistance <= 5 && topDistance >= 5)
+            int rightDistance = collider.Bounds.Left - Bounds.Right;
+            int leftDistance = collider.Bounds.Left - Bounds.Left;
+            int topDistance = collider.Bounds.Top - Bounds.Bottom;
+            if (rightDistance <= 0 && leftDistance > 0 && topDistance <= -5)
             {
                 return true;
             }
@@ -95,7 +97,7 @@ namespace MarioPlatformer
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            texture.Sprite.Draw(spriteBatch, position, Game1.Scale);
+            currentSpriteSheet.Sprite.Draw(spriteBatch, position, Game1.Scale);
         }        
     }
 }
