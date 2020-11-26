@@ -58,8 +58,23 @@ namespace MarioPlatformer
             }
             Enemies.Add(new Enemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 36)),level, new Vector2(100,0),new Vector2(15,36), 5, 30.0f));
 
+            
         }
-        public override void Update(GameTime gameTime)
+        private void PlayerCollisionHandling()
+        {
+            foreach (ShootingObstacle canon in shootingObstacles)
+            {
+                for (int i = canon.BulletList.Count-1; i > -1; i--)
+                {
+                    if (canon.BulletList[i].Bounds.Intersects(player.Bounds))
+                    {
+                        player.Death(new Vector2(100, 100));
+                        canon.BulletList.RemoveAt(i);
+                    }
+                }
+            }
+        }
+    public override void Update(GameTime gameTime)
         {
             player.Update(gameTime);
             playerVelocity = player.GetTotalVelocity(gameTime);// new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y);
@@ -77,6 +92,8 @@ namespace MarioPlatformer
             {
                 enemy.Update(gameTime);
             }
+
+            PlayerCollisionHandling();
 
         }
 

@@ -17,7 +17,8 @@ namespace MarioPlatformer
         float speed;
         float lifeTime;
         Vector2 direction;
-        
+
+        Rectangle bounds;
 
         public Bullet(SpriteSheet texture, Level level, Vector2 position, Vector2 size, float speed, float lifeTime, Vector2 direction)
         {
@@ -28,13 +29,17 @@ namespace MarioPlatformer
             this.speed = speed;
             this.lifeTime = lifeTime;
             this.direction = direction;
+
+            bounds = new Rectangle((int)position.X, (int)position.Y, (int)(size.X * Game1.Scale.X), (int)(size.Y * Game1.Scale.Y));
         }
 
-        public Rectangle BoundingBox => new Rectangle((int) position.X, (int) position.Y, (int)(size.X* Game1.Scale.X), (int) (size.Y* Game1.Scale.Y));
+        public Rectangle Bounds => bounds;
 
 
         public void Update(GameTime gameTime)
         {
+            bounds.X = (int)position.X;
+            bounds.Y = (int)position.Y;
             position += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 

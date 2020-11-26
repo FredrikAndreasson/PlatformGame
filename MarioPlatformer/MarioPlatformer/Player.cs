@@ -14,6 +14,11 @@ namespace MarioPlatformer
 
         }
 
+        public void Death(Vector2 spawnPoint)
+        {
+            position = spawnPoint;
+        }
+
         public override void Update(GameTime gameTime)
         {
             direction = Vector2.Zero;

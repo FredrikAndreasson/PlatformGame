@@ -39,8 +39,7 @@ namespace MarioPlatformer
         public override void Update(GameTime gameTime)
         {
             UpdateGravity(gameTime);
-            
-
+            UpdateCollision(gameTime);
             UpdateVelocity(gameTime);
         }
         public override void Draw(SpriteBatch spriteBatch)

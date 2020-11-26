@@ -10,7 +10,7 @@ namespace MarioPlatformer
     {
         Vector2 direction;
         float spawnTimer;
-        List<Bullet> BulletList = new List<Bullet>(); //keep track of its own bullets?
+        public List<Bullet> BulletList = new List<Bullet>(); //keep track of its own bullets?
 
         SpriteSheet bulletTexture;
 
