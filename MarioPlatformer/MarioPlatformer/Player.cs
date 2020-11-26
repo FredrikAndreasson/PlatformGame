@@ -31,7 +31,16 @@ namespace MarioPlatformer
             this.currentSpriteSheet = idleSpriteSheet;
         }
 
+<<<<<<< HEAD
+        public void Death(Vector2 spawnPoint)
+        {
+            position = spawnPoint;
+        }
+
+        public override void Update(GameTime gameTime)
+=======
         protected override void InternalUpdateAnimation(GameTime gameTime)
+>>>>>>> e35527c7d9795a093fb54e3fbf4505f73bfbe7a9
         {
 
             if(!doneJumping)
