@@ -16,6 +16,9 @@ namespace MarioPlatformer
 
         private bool isDay = true;
 
+        private Player player;
+        private List<Enemy> enemies;        
+
         public Level(SpriteSheetLoader loader, LevelData levelData)
         {
             this.levelData = levelData;
@@ -49,6 +52,16 @@ namespace MarioPlatformer
             }
         }
 
+        public void Update(GameTime gameTime, Camera camera)
+        {
+            //player.Update(gameTime);
+            /*foreach(Enemy enemy in enemies)
+            {
+                enemy.Update(gameTime);
+
+                // Check collision with player
+            }*/
+        }
         
 
         public void Draw(SpriteBatch spriteBatch)

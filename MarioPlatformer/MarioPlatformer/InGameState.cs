@@ -19,7 +19,7 @@ namespace MarioPlatformer
 
         ParalaxBackgroundManager backgroundManager;
 
-        private bool debug = true;
+        private bool debug = false;
         private Texture2D debugTexture;
         private Texture2D collisionTexture;
         
@@ -70,8 +70,9 @@ namespace MarioPlatformer
                 }
             }
         }
-    public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
+            level.Update(gameTime, camera);
             player.Update(gameTime);
             //Update after player so that the player stays centered
             camera.CenterOn(player.Position);
