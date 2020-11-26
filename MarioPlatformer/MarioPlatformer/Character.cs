@@ -56,7 +56,7 @@ namespace MarioPlatformer
         {
             if(!jumping)
             {
-                velocity.Y += 9.82f * 2 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                velocity.Y += 9.82f * 2;
             }
         }
 
@@ -66,9 +66,9 @@ namespace MarioPlatformer
             if(jumping)
             {
                 velocity.Y -= jumpPower;
-                jumpPower *= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
+                jumpPower = 0.0f;
             }
+
             jumpTimer -= gameTime.ElapsedGameTime.TotalMilliseconds;
             
             
@@ -78,7 +78,7 @@ namespace MarioPlatformer
                 jumping = false;
             }
 
-            Vector2 totalVelocity = velocity + (direction * speed) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Vector2 totalVelocity = (velocity + (direction * speed)) * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 newPosition = position + totalVelocity;
 
             Rectangle hitbox = new Rectangle((int)newPosition.X, (int)newPosition.Y, Bounds.Width, Bounds.Height);
@@ -109,23 +109,19 @@ namespace MarioPlatformer
                     newPosition.Y = collider.Bounds.Top - Bounds.Height + 1;
                     velocity.Y = 0;
                     doneJumping = true;
-                    //System.Diagnostics.Debug.WriteLine("TopOf");
                 }
                 else if (IsBelow(collider))
                 {
                     newPosition.Y = collider.Bounds.Bottom;
                     velocity.Y = 0;
-                    System.Diagnostics.Debug.WriteLine("Below");
                 }
                 else if (IsLeftOf(collider))
                 {
                     newPosition.X = collider.Bounds.Right;
-                    System.Diagnostics.Debug.WriteLine("Left");
                 }
                 else if (IsRightOf(collider))
                 {
                     newPosition.X = collider.Bounds.Left - Bounds.Width;
-                    System.Diagnostics.Debug.WriteLine("Right");
                 }
             }
 
@@ -139,9 +135,10 @@ namespace MarioPlatformer
             {
                 if(IsOnTopOf(collider) && !jumping)
                 {
-                    jumpPower = 7.0f;
+                    jumpPower = 400.0f;
                     jumping = true;
                     jumpTimer = 250.0f;
+                    velocity.Y = 0;
                     doneJumping = false;
                     break;
                 }
@@ -160,7 +157,6 @@ namespace MarioPlatformer
             UpdateAnimation(gameTime);
 
             UpdateVelocity(gameTime);
-            //UpdateCollision(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

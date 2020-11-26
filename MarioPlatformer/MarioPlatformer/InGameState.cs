@@ -21,10 +21,8 @@ namespace MarioPlatformer
 
         private bool debug = true;
         private Texture2D debugTexture;
-        private Texture2D lineTexture;
-
-        private Vector2 playerVelocity = Vector2.Zero;
-
+        private Texture2D collisionTexture;
+        
         List<ShootingObstacle> shootingObstacles = new List<ShootingObstacle>();
         List<Enemy> Enemies = new List<Enemy>();
 
@@ -39,7 +37,7 @@ namespace MarioPlatformer
             this.player = new Player(playerAnimationSheet, level, new Vector2(0, 250),new Vector2(16,16), 5, 200.0f);
 
             this.debugTexture = loader.CreateRectangleTexture((int)(Tile.SIZE * Game1.Scale.X), (int)(Tile.SIZE * Game1.Scale.Y), new Color(255, 255, 255, 255));
-            this.lineTexture = loader.CreateFilledTexture(1, 1, Color.White);
+            this.collisionTexture = loader.CreateFilledTexture((int)(Tile.SIZE * Game1.Scale.X), (int)(Tile.SIZE * Game1.Scale.Y), new Color(255, 255, 255, 255));
 
             this.camera = new Camera(graphicsDevice.Viewport);
 
@@ -60,9 +58,10 @@ namespace MarioPlatformer
         public override void Update(GameTime gameTime)
         {
             player.Update(gameTime);
-            playerVelocity = player.GetTotalVelocity(gameTime);// new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y);
             //Update after player so that the player stays centered
-            camera.SetPosition(player.Position);
+            camera.CenterOn(player.Position);
+            camera.SetPosition(new Vector2(camera.Transform.Translation.X, camera.Bounds.Y > 0 ? camera.Transform.Translation.Y : 0));
+
 
             backgroundManager.Update(level.IsDay);
 
@@ -107,24 +106,15 @@ namespace MarioPlatformer
                     spriteBatch.Draw(debugTexture, tile.Bounds, new Color(0, 255, 0, 128));
                 }
 
-                Vector2 playerMiddlePos = player.Position + (player.Size * 0.5f * Game1.Scale);
-                Vector2 directionPoint = playerMiddlePos - playerVelocity;
-                float angle = (float)Math.Atan2(playerMiddlePos.Y - directionPoint.Y, playerMiddlePos.X- directionPoint.X);
-
-                spriteBatch.Draw(lineTexture, new Rectangle((int)(playerMiddlePos.X)-1, (int)(playerMiddlePos.Y), 2, 40), null, Color.White, MathHelper.ToRadians(270) + angle, Vector2.Zero, SpriteEffects.None, 1.0f);
-
+                //spriteBatch.Draw(debugTexture, player.Bounds, new Color(0, 255, 0, 128));
 
                 GameObject[] colliders = player.GetColliders(level.Tiles);
                 foreach(GameObject collider in colliders)
                 {
                     if (collider != null)
                     {
-                        if (player.IsOnTopOf(collider))
-                        {
-                            spriteBatch.Draw(lineTexture, new Rectangle(collider.Bounds.X, collider.Bounds.Y, collider.Bounds.Width, 5), new Color(255, 0, 0, 255));
-                        }
 
-                        //spriteBatch.Draw(debugTexture, collider.Bounds, new Color(255, 0, 0, 128));
+                        spriteBatch.Draw(collisionTexture, collider.Bounds, new Color(255, 0, 0, 255));
                     }
                 }
             }
