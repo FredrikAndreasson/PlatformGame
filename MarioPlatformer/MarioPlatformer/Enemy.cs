@@ -28,13 +28,10 @@ namespace MarioPlatformer
 
         protected override void InternalUpdate(GameTime gameTime)
         {
-<<<<<<< HEAD
-            UpdateGravity(gameTime);
-            UpdateCollision(gameTime);
-            UpdateVelocity(gameTime);
-=======
 
->>>>>>> e35527c7d9795a093fb54e3fbf4505f73bfbe7a9
+            UpdateGravity(gameTime);
+            UpdateVelocity(gameTime);
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
