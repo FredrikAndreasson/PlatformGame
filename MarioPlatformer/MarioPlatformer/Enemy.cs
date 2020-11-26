@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MarioPlatformer
 {
-    class Enemy : Character
+    abstract class Enemy : Character
     {      
 
         public Enemy(SpriteSheet texture, Level level, Vector2 position, Vector2 size, int health, float speed) : base(texture, level, position, size, health, speed)
@@ -20,23 +20,10 @@ namespace MarioPlatformer
             currentSpriteSheet.XIndex++;
         }
 
-        public Vector2 ChangeDirection(Vector2 velocity)
-        {
-
-            return Vector2.Zero;
-        }
+        public abstract Vector2 ChangeDirection(Vector2 velocity);
 
         protected override void InternalUpdate(GameTime gameTime)
         {
-
-            UpdateGravity(gameTime);
-            UpdateVelocity(gameTime);
-
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
 
         }
     }

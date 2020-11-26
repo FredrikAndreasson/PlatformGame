@@ -23,6 +23,7 @@ namespace MarioPlatformer
         private Texture2D debugTexture;
         private Texture2D collisionTexture;
         
+        //Move Enemy logic to the level class
         List<ShootingObstacle> shootingObstacles = new List<ShootingObstacle>();
         List<Enemy> Enemies = new List<Enemy>();
 
@@ -64,7 +65,7 @@ namespace MarioPlatformer
                 {
                     if (canon.BulletList[i].Bounds.Intersects(player.Bounds))
                     {
-                        player.Death(new Vector2(100, 100));
+                        player.Death(new Vector2(100, 100)); // Die unless you jump ontop of the enemy 
                         canon.BulletList.RemoveAt(i);
                     }
                 }
