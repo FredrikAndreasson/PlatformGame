@@ -26,7 +26,7 @@ namespace MarioPlatformer
 
         private SpriteSheetLoader spritesheetLoader;
 
-
+        private Texture2D circle;
         public Game1()
         {
             Graphics = new GraphicsDeviceManager(this);
@@ -58,6 +58,8 @@ namespace MarioPlatformer
             gameState = inGameState;
             //gameState = editor;
 
+            circle = spritesheetLoader.CreateCircleTexture(50, Color.Green);
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -74,6 +76,10 @@ namespace MarioPlatformer
         {
             GraphicsDevice.Clear(Color.Transparent);
             gameState.Draw(spriteBatch);
+
+            spriteBatch.Begin();
+            spriteBatch.Draw(circle, new Vector2(50, 50), Color.White);
+            spriteBatch.End();
         }
     }
 }

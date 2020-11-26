@@ -12,6 +12,10 @@ namespace MarioPlatformer
         
         protected Vector2 velocity;
         protected Vector2 direction;
+
+        private float jumpPower;
+        protected bool jumping;
+        protected double jumpTimer;
         
         public Character(SpriteSheet texture, Level level, Vector2 position, Vector2 size, int health, float speed) : base(texture, level, position, size)
         {
@@ -53,7 +57,10 @@ namespace MarioPlatformer
 
         protected void UpdateGravity(GameTime gameTime)
         {
-            velocity.Y += 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if(!jumping)
+            {
+                velocity.Y += 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
         }
 
         protected void UpdateCollision(GameTime gameTime)
@@ -83,18 +90,37 @@ namespace MarioPlatformer
         }
 
         protected void UpdateVelocity(GameTime gameTime)
-        {   
+        {
+            if(jumping)
+            {
+                velocity.Y -= jumpPower;
+                jumpPower *= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            }
+            jumpTimer -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            
+            
+            if (jumpTimer <= 0)
+            {
+                jumpTimer = 0.0f;
+                jumping = false;
+            }
+            
+
             position += speed * (velocity + direction) * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
         
-        protected void Jump()
+        protected void Jump(GameTime gameTime)
         {
             GameObject[] colliders = GetColliders(level.Tiles);
             foreach(GameObject collider in colliders)
             {
-                if(IsOnTopOf(collider))
+                if(IsOnTopOf(collider) && !jumping)
                 {
-                    velocity.Y -= 4.0f;
+                    jumpPower = 2.0f;
+                    jumping = true;
+                    jumpTimer = 250.0f;
+                    
                     break;
                 }
             }

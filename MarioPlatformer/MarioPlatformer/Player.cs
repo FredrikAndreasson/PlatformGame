@@ -30,8 +30,13 @@ namespace MarioPlatformer
             
             if (Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                Jump();
+                Jump(gameTime);
             }
+            else
+            {
+                jumping = false;
+            }
+
                
 
             UpdateVelocity(gameTime);

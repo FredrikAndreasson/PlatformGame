@@ -93,5 +93,34 @@ namespace MarioPlatformer
 
             return texture;
         }
+
+        public Texture2D CreateCircleTexture(int radius, Color color)
+        {
+            Texture2D texture = new Texture2D(graphicsDevice, radius, radius);
+            Color[] colorData = new Color[radius * radius];
+
+            float diameter = radius / 2f;
+            float diameterSquared = diameter * diameter;
+
+            for (int x = 0; x < radius; x++)
+            {
+                for (int y = 0; y < radius; y++)
+                {
+                    int index = x * radius + y;
+                    Vector2 pos = new Vector2(x - diameter, y - diameter);
+                    if (pos.LengthSquared() <= diameterSquared)
+                    {
+                        colorData[index] = color;
+                    }
+                    else
+                    {
+                        colorData[index] = Color.Transparent;
+                    }
+                }
+            }
+
+            texture.SetData(colorData);
+            return texture;
+        }
     }
 }
