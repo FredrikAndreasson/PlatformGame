@@ -6,26 +6,38 @@ using System.Text;
 
 namespace MarioPlatformer
 {
-    class ShootingObstacle : GameObject
+    class ShootingObstacle : Enemy
     {
-        Vector2 direction;
         float spawnTimer;
         public List<Bullet> BulletList = new List<Bullet>(); //keep track of its own bullets?
 
         SpriteSheet bulletTexture;
 
-        public ShootingObstacle(SpriteSheet texture, Level level, Vector2 position, Vector2 size, Vector2 direction, SpriteSheet bulletTexture) : base(texture, level, position, size)
+        public ShootingObstacle(SpriteSheet texture, Level level, Vector2 position, Vector2 size, Vector2 direction, SpriteSheet bulletTexture) : base(texture, level, position, size, 1, 0.0f)
         {
             this.direction = direction;
             this.bulletTexture = bulletTexture;
         }
 
-
-        public void Update(GameTime gameTime)
+        protected override Vector2 ChangeDirection(Vector2 playerPosition)
         {
+
+            return new Vector2(0, 0);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (level.MyPlayer.Position.X > position.X)
+            {
+                direction.X = 1;
+            }
+            else
+            {
+                direction.X = -1;
+            }
             if (spawnTimer <= 0)
             {
-                BulletList.Add(new Bullet(bulletTexture, level, position, new Vector2(16, 13), 70.0f, 2000.0f, direction));
+                level.AddEnemy(new Bullet(bulletTexture, level, position, new Vector2(16, 13), 70.0f, 2000.0f, direction));
                 spawnTimer = 500.0f;
             }
             else
@@ -54,5 +66,13 @@ namespace MarioPlatformer
             }
         }
 
+        protected override void InternalUpdateAnimation(GameTime gameTime)
+        {
+        }
+
+        protected override void InternalUpdate(GameTime gameTime)
+        {
+
+        }
     }
 }

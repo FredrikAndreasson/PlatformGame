@@ -38,6 +38,7 @@ namespace MarioPlatformer
             List<GameObject> collidingObjects = new List<GameObject>();
             foreach (GameObject collider in colliders)
             {
+
                 if (bounds.Intersects(collider.Bounds))
                 {
                     collidingObjects.Add(collider);

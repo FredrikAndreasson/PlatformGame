@@ -7,8 +7,8 @@ using System.Text;
 namespace MarioPlatformer
 {
     abstract class Enemy : Character
-    {      
-
+    {
+        public bool isDead = false;
         public Enemy(SpriteSheet texture, Level level, Vector2 position, Vector2 size, int health, float speed) : base(texture, level, position, size, health, speed)
         {
             velocity.X = Game1.random.Next(2);
@@ -20,7 +20,7 @@ namespace MarioPlatformer
             currentSpriteSheet.XIndex++;
         }
 
-        public abstract Vector2 ChangeDirection(Vector2 velocity);
+        protected abstract Vector2 ChangeDirection(Vector2 velocity);
 
         protected override void InternalUpdate(GameTime gameTime)
         {
