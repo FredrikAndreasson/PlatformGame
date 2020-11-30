@@ -11,13 +11,10 @@ namespace MarioPlatformer
         public bool isDead = false;
         public Enemy(SpriteSheet texture, Level level, Vector2 position, Vector2 size, int health, float speed) : base(texture, level, position, size, health, speed)
         {
-            velocity.X = Game1.random.Next(2);
-            velocity.X = velocity.X == 1 ? -1 : 1;
         }
 
         protected override void InternalUpdateAnimation(GameTime gameTime)
         {
-            currentSpriteSheet.XIndex++;
         }
 
         protected abstract Vector2 ChangeDirection(Vector2 velocity);

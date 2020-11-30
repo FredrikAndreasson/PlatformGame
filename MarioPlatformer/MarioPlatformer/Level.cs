@@ -17,7 +17,9 @@ namespace MarioPlatformer
         private bool isDay = false;
 
         private Player player;
-        private List<Enemy> enemies;        
+        private List<Enemy> enemies;
+
+        private bool clearedSpawns;
 
         public Level(SpriteSheetLoader loader, LevelData levelData)
         {
@@ -92,6 +94,17 @@ namespace MarioPlatformer
 
         public void Update(GameTime gameTime, Camera camera)
         {
+            if (!clearedSpawns)
+            {
+                for (int i = tiles.Length-1; i > -1; i--)
+                {
+                    if (tiles[i].IDType == 91)
+                    {
+                        tiles[i].collidable = false;
+                    }
+                }
+                clearedSpawns = true;
+            }
             player.Update(gameTime);
             for (int i = 0; i < enemies.Count; i++)
             {

@@ -10,6 +10,7 @@ namespace MarioPlatformer
     {
         public PatrollingEnemy(SpriteSheet texture, Level level, Vector2 position, Vector2 size, int health, float speed) : base(texture, level, position, size, health, speed)
         {
+            velocity.X = -1;
         }
 
         protected override Vector2 ChangeDirection(Vector2 velocity)
@@ -26,13 +27,13 @@ namespace MarioPlatformer
                 }
             }
 
-            return new Vector2(1, 0);
+            return direction;
         }
 
         protected override void InternalUpdate(GameTime gameTime)
         {
-
-            velocity = ChangeDirection(velocity);
+            //direction = ChangeDirection(direction);
+            //velocity *= direction;
         }
 
         protected override void InternalUpdateAnimation(GameTime gameTime)

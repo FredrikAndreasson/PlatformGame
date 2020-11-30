@@ -49,7 +49,7 @@ namespace MarioPlatformer
                 }
                 if (level.Tiles[i].IDType == 91)
                 {
-                    Enemy patrolling = new PatrollingEnemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(16, 22), 0),level, level.Tiles[i].Position+new Vector2(-25,-25), new Vector2(16*Game1.Scale.X, 16*Game1.Scale.Y),1, 5.0f);
+                    Enemy patrolling = new PatrollingEnemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(16, 22), 1),level, new Vector2(100,100), new Vector2(16*Game1.Scale.X, 16*Game1.Scale.Y),1, 70.0f);
                     level.AddEnemy(patrolling);
                 }
             }
