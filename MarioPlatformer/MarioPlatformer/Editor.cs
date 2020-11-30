@@ -13,6 +13,7 @@ namespace MarioPlatformer
         private Dictionary<Vector2, Tile> tiles;
         private Dictionary<Vector2, Tile> gameObjectTiles;
 
+        private string currentLevelPath;
         private Camera camera;
         private Viewport levelViewport;
         private Viewport paletteViewport;
@@ -87,6 +88,40 @@ namespace MarioPlatformer
             return data;
         }
 
+        public void LoadLevel(string levelPath)
+        {
+            currentLevelPath = levelPath;
+
+            tiles.Clear();
+            gameObjectTiles.Clear();
+
+            LevelData data = LevelData.LoadLevelData(levelPath);
+            System.Diagnostics.Debug.WriteLine("Loaded level: " + levelPath);
+
+            if (data == null)
+            {
+                return;
+            }
+
+            this.palette = loader.LoadSpriteSheet(data.SpriteSheetFilePath, Vector2.Zero, new Vector2(16, 16), 0);
+            foreach(Tile tile in data.Tiles)
+            {
+                int x = tile.IDType % palette.Columns;
+                int y = tile.IDType / palette.Columns;
+                SpriteSheet sheet = GetSpriteSheetAt(x, y);
+
+                tiles.Add(tile.Position, new Tile(sheet, null, tile.Position, tile.IDType));
+            }
+            foreach(Tile tile in data.Objects)
+            {
+                int x = tile.IDType % palette.Columns;
+                int y = tile.IDType / palette.Columns;
+                SpriteSheet sheet = GetSpriteSheetAt(x, y);
+                gameObjectTiles.Add(tile.Position, new Tile(sheet, null, tile.Position, tile.IDType));
+            }
+            
+        }
+
         public override void Update(GameTime gameTime)
         {
             mouseTile = GetTileOnCursor() * Tile.SIZE * Game1.Scale;
@@ -101,10 +136,18 @@ namespace MarioPlatformer
                 oldKeyboardState = keyboardState;
             }
 
-            if(keyboardState.IsKeyDown(Keys.LeftControl) && keyboardState.IsKeyDown(Keys.S) && !oldKeyboardState.IsKeyDown(Keys.S))
+            for(int i = 0; i < 5;i++)
+            if (keyboardState.IsKeyDown(Keys.F1 + i) && !oldKeyboardState.IsKeyDown(Keys.F1 + i))
             {
-                LevelData.SaveData(CreateLevelData(), "Content\\Level1.lvl");
-                System.Diagnostics.Debug.WriteLine("Level1 saved");
+                LoadLevel("Content\\Level"+(i+1)+".lvl");
+                
+
+            }
+
+            if (keyboardState.IsKeyDown(Keys.LeftControl) && keyboardState.IsKeyDown(Keys.S) && !oldKeyboardState.IsKeyDown(Keys.S))
+            {
+                LevelData.SaveData(CreateLevelData(), currentLevelPath);
+                System.Diagnostics.Debug.WriteLine(currentLevelPath+" saved!");
             }
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
@@ -133,6 +176,7 @@ namespace MarioPlatformer
                 if(insideLevel)
                 {
                     tiles.Remove(mouseTile);
+                    gameObjectTiles.Remove(mouseTile);
                 }
             }
 
