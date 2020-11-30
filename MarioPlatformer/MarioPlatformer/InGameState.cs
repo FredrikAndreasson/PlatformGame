@@ -41,15 +41,10 @@ namespace MarioPlatformer
             {
                 if (level.Tiles[i].IDType == 90)
                 {
-                    int direction = Game1.random.Next(2);
-                    direction = direction == 1 ? -1 : 1;
-                    ShootingObstacle shooting = new ShootingObstacle(loader.LoadSpriteSheet("Obstacles\\canon", Vector2.Zero, new Vector2(16, 16), 0),level,level.Tiles[i].Position,new Vector2(16*Game1.Scale.X,16*Game1.Scale.Y),new Vector2(direction, 0),loader.LoadSpriteSheet("Obstacles\\bullet",Vector2.Zero,new Vector2(16,13),0));
-                    level.AddEnemy(shooting);
-                }
-                if (level.Tiles[i].IDType == 91)
-                {
-                    Enemy patrolling = new PatrollingEnemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 20), 1),level, level.Tiles[i].Position + new Vector2(0,-100) , new Vector2(15, 19),1, 70.0f);//new Vector2(15 * Game1.Scale.X, 19 * Game1.Scale.Y)
-                    level.AddEnemy(patrolling);
+                    //int direction = Game1.random.Next(2);
+                    //direction = direction == 1 ? -1 : 1;
+                    //ShootingObstacle shooting = new ShootingObstacle(loader.LoadSpriteSheet("Obstacles\\canon", Vector2.Zero, new Vector2(16, 16), 0),level,level.Tiles[i].Position,new Vector2(16*Game1.Scale.X,16*Game1.Scale.Y),new Vector2(direction, 0),loader.LoadSpriteSheet("Obstacles\\bullet",Vector2.Zero,new Vector2(16,13),0));
+                    //level.AddEnemy(shooting);
                 }
             }
 
