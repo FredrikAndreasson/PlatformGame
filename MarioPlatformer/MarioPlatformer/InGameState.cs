@@ -22,7 +22,6 @@ namespace MarioPlatformer
         private Texture2D debugTexture;
         private Texture2D collisionTexture;
 
-
         public InGameState(SpriteSheetLoader loader, GraphicsDevice graphicsDevice, GameWindow window)
         {
 
@@ -47,6 +46,7 @@ namespace MarioPlatformer
                     ShootingObstacle shooting = new ShootingObstacle(loader.LoadSpriteSheet("Obstacles\\canon", Vector2.Zero, new Vector2(16, 16), 0),level,level.Tiles[i].Position,new Vector2(16*Game1.Scale.X,16*Game1.Scale.Y),new Vector2(direction, 0),loader.LoadSpriteSheet("Obstacles\\bullet",Vector2.Zero,new Vector2(16,13),0));
                     level.AddEnemy(shooting);
                 }
+<<<<<<< HEAD
                 if (level.Tiles[i].IDType == 91)
                 {
                     Enemy patrolling = new PatrollingEnemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 20), 1),level, level.Tiles[i].Position + new Vector2(0,-200) , new Vector2(15, 19),1, 70.0f);//new Vector2(15 * Game1.Scale.X, 19 * Game1.Scale.Y)
@@ -54,9 +54,18 @@ namespace MarioPlatformer
                 }
             }
             
+=======
+>>>>>>> 1a88dbd4a638e4e1a585445afc4f80789a62e2e5
 
-            
+            }
+            //Enemies.Add(new Enemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 36)),level, new Vector2(100,0),new Vector2(15,36), 5, 30.0f));
+            for (int i = 0; i < level.Objects.Length; i++)
+            {
+                //SpawnEnemy(level.Objects[i].IDType, level.Objects[i].Position, loader);
+            }
         }
+
+
         public override void Update(GameTime gameTime)
         {
             level.Update(gameTime, camera);

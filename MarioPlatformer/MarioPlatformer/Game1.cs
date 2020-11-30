@@ -57,7 +57,7 @@ namespace MarioPlatformer
             editor = new Editor(spritesheetLoader, Window);
             gameState = inGameState;
             //gameState = editor;
-
+            
             circle = spritesheetLoader.CreateCircleTexture(50, Color.Green);
 
         }
@@ -77,9 +77,6 @@ namespace MarioPlatformer
             GraphicsDevice.Clear(Color.Transparent);
             gameState.Draw(spriteBatch);
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(circle, new Vector2(50, 50), Color.White);
-            spriteBatch.End();
         }
     }
 }
