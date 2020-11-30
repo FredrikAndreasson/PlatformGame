@@ -11,7 +11,7 @@ namespace MarioPlatformer
         public PatrollingEnemy(SpriteSheet texture, Level level, Vector2 position, Vector2 size, int health, float speed) : base(texture, level, position, size, health, speed)
         {
             velocity.X = 1;
-            currentSpriteSheet = new SpriteSheet(texture, Vector2.Zero, new Vector2(48, 20), new Vector2(15, 20), 1);
+            currentSpriteSheet = texture.GetSubAt(0, 0, 3, 0);
         }
 
         protected override void ChangeDirection()

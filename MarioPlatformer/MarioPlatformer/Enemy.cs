@@ -18,10 +18,6 @@ namespace MarioPlatformer
         {
         }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 1a88dbd4a638e4e1a585445afc4f80789a62e2e5
         protected abstract void ChangeDirection();
 
         protected override void InternalUpdate(GameTime gameTime)
