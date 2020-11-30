@@ -135,18 +135,18 @@ namespace MarioPlatformer
                 }
                 clearedSpawns = true;
             }
+            DeadEnemyCheck();
             player.Update(gameTime);
             for (int i = 0; i < enemies.Count; i++)
             {
-                enemies[i].Update(gameTime);
-
                 if (enemies[i] is Cannon)
                 {
                     continue;
                 }
                 PlayerCollision(enemies[i], gameTime);
+                enemies[i].Update(gameTime);
             }
-            DeadEnemyCheck();
+            
 
         }
         
