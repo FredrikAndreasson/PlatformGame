@@ -19,10 +19,8 @@ namespace MarioPlatformer
             this.bulletTexture = bulletTexture;
         }
 
-        protected override Vector2 ChangeDirection(Vector2 playerPosition)
+        protected override void ChangeDirection()
         {
-
-            return new Vector2(0, 0);
         }
 
         public override void Update(GameTime gameTime)

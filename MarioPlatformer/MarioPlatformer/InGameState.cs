@@ -49,7 +49,7 @@ namespace MarioPlatformer
                 }
                 if (level.Tiles[i].IDType == 91)
                 {
-                    Enemy patrolling = new PatrollingEnemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 19), 1),level, new Vector2(100,100), new Vector2(15*Game1.Scale.X, 19*Game1.Scale.Y),1, 70.0f);
+                    Enemy patrolling = new PatrollingEnemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 20), 1),level, level.Tiles[i].Position + new Vector2(0,-200) , new Vector2(15, 19),1, 70.0f);//new Vector2(15 * Game1.Scale.X, 19 * Game1.Scale.Y)
                     level.AddEnemy(patrolling);
                 }
             }
@@ -88,6 +88,10 @@ namespace MarioPlatformer
                     spriteBatch.Draw(debugTexture, tile.Bounds, new Color(0, 255, 0, 128));
                 }
 
+                if (level.Enemies.Count > 1)
+                {
+                    spriteBatch.Draw(debugTexture, level.Enemies[1].Bounds, new Color(0, 255, 0, 128));
+                }
                 //spriteBatch.Draw(debugTexture, player.Bounds, new Color(0, 255, 0, 128));
 
                 GameObject[] colliders = level.MyPlayer.GetColliders(level.Tiles);

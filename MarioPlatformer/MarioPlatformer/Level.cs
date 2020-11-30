@@ -41,6 +41,8 @@ namespace MarioPlatformer
 
         public Player MyPlayer => player;
 
+        public List<Enemy> Enemies => enemies;
+
         private void Create(SpriteSheetLoader loader)
         {
             this.spritesheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(16, 16), 0);

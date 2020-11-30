@@ -17,7 +17,7 @@ namespace MarioPlatformer
         {
         }
 
-        protected abstract Vector2 ChangeDirection(Vector2 velocity);
+        protected abstract void ChangeDirection();
 
         protected override void InternalUpdate(GameTime gameTime)
         {
