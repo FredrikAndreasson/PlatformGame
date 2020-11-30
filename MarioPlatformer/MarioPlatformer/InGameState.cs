@@ -27,7 +27,7 @@ namespace MarioPlatformer
 
             this.graphicsDevice = graphicsDevice;
 
-            this.level = new Level(loader, LevelData.LoadLevelData("Content\\Level1.lvl"));            
+            this.level = new Level(loader, LevelData.LoadLevelData("Content\\Level2.lvl"));            
 
             this.debugTexture = loader.CreateRectangleTexture((int)(Tile.SIZE * Game1.Scale.X), (int)(Tile.SIZE * Game1.Scale.Y), new Color(255, 255, 255, 255));
             this.collisionTexture = loader.CreateFilledTexture((int)(Tile.SIZE * Game1.Scale.X), (int)(Tile.SIZE * Game1.Scale.Y), new Color(255, 255, 255, 255));

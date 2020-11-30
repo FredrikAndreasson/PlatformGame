@@ -55,6 +55,7 @@ namespace MarioPlatformer
 
             inGameState = new InGameState(spritesheetLoader, GraphicsDevice, Window);
             editor = new Editor(spritesheetLoader, Window);
+            editor.LoadLevel( "Content\\Level1.lvl");
             gameState = inGameState;
             //gameState = editor;
             
@@ -67,7 +68,6 @@ namespace MarioPlatformer
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            menu.Update(gameTime);
 
             gameState.Update(gameTime);
         }

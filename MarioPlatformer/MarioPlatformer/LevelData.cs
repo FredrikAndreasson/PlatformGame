@@ -30,6 +30,10 @@ namespace MarioPlatformer
         public static LevelData LoadLevelData(string filePath)
         {
             LevelData data = null;
+            if(!File.Exists(filePath))
+            {
+                return data;
+            }
             using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
             {
                 string spritesPath = reader.ReadString();
