@@ -14,15 +14,23 @@ namespace MarioPlatformer
         private Tile[] tiles;
         private Tile[] objects;
 
-        private bool isDay = true;
+        private bool isDay = false;
 
         private Player player;
-        private List<Enemy> enemies;        
+        private List<Enemy> enemies;
+
+        private bool clearedSpawns;
 
         public Level(SpriteSheetLoader loader, LevelData levelData)
         {
             this.levelData = levelData;
-            
+
+            SpriteSheet playerAnimationSheet = loader.LoadSpriteSheet("player");
+
+            this.player = new Player(playerAnimationSheet, this, new Vector2(0, 250), new Vector2(16, 16), 5, 200.0f);
+
+            this.enemies = new List<Enemy>();
+
             Create(loader);
         }
 
@@ -32,7 +40,7 @@ namespace MarioPlatformer
         public Tile[] Tiles => tiles;
 
         public Tile[] Objects => objects;
-
+        public Player MyPlayer => player;
 
         private void Create(SpriteSheetLoader loader)
         {
@@ -69,23 +77,80 @@ namespace MarioPlatformer
             }
         }
 
+        
+
+        public void AddEnemy(Enemy enemy)
+        {
+            enemies.Add(enemy);
+        }
+
+        private void PlayerCollision(Enemy enemy)
+        {
+            if (player.Bounds.Intersects(enemy.Bounds) && player.Position.Y < enemy.Position.Y)
+            {
+                 enemy.isDead = true;
+            }
+            else if(player.Bounds.Intersects(enemy.Bounds))
+            {
+                enemy.isDead = true;
+                player.Death(new Vector2(100,100));
+            }
+        }
+
+        private void DeadEnemyCheck()
+        {
+            for (int i = enemies.Count-1; i > -1; i--)
+            {
+                if (enemies[i].isDead)
+                {
+                    enemies.RemoveAt(i);
+                }
+            }
+        }
+
         public void Update(GameTime gameTime, Camera camera)
         {
-            //player.Update(gameTime);
-            /*foreach(Enemy enemy in enemies)
+            if (!clearedSpawns)
             {
-                enemy.Update(gameTime);
+                for (int i = tiles.Length-1; i > -1; i--)
+                {
+                    if (tiles[i].IDType == 91)
+                    {
+                        tiles[i].collidable = false;
+                    }
+                }
+                clearedSpawns = true;
+            }
+            player.Update(gameTime);
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemies[i].Update(gameTime);
 
-                // Check collision with player
-            }*/
+                if (enemies[i] is ShootingObstacle)
+                {
+                    continue;
+                }
+                PlayerCollision(enemies[i]);
+            }
+            DeadEnemyCheck();
+
         }
         
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach(Tile tile in tiles)
+            player.Draw(spriteBatch);
+            foreach (Tile tile in tiles)
             {
-                tile.Draw(spriteBatch);
+                if (tile.IDType != 91)
+                {
+                    tile.Draw(spriteBatch);
+                }
+                
+            }
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Draw(spriteBatch);
             }
         }
         

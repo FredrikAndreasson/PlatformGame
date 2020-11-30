@@ -7,46 +7,42 @@ using System.Text;
 namespace MarioPlatformer
 {
 
-    class Bullet
+    class Bullet : Enemy
     {
-
-        SpriteSheet texture;
-        Level level;
-        Vector2 position;
-        Vector2 size;
-        float speed;
         float lifeTime;
-        Vector2 direction;
 
-        Rectangle bounds;
-
-        public Bullet(SpriteSheet texture, Level level, Vector2 position, Vector2 size, float speed, float lifeTime, Vector2 direction)
+        public Bullet(SpriteSheet texture, Level level, Vector2 position, Vector2 size, float speed, float lifeTime, Vector2 direction) : base(texture, level, position, size, 1, speed)
         {
-            this.texture = texture;
-            this.level = level;
-            this.position = position;
-            this.size = size;
-            this.speed = speed;
             this.lifeTime = lifeTime;
             this.direction = direction;
-
-            bounds = new Rectangle((int)position.X, (int)position.Y, (int)(size.X * Game1.Scale.X), (int)(size.Y * Game1.Scale.Y));
         }
 
-        public Rectangle Bounds => bounds;
-
-
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            bounds.X = (int)position.X;
-            bounds.Y = (int)position.Y;
             position += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            TerrainCollision();
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        private void TerrainCollision()
+        {
+            foreach (Tile tile in level.Tiles)
+            {
+                if (Bounds.Intersects(tile.Bounds)&&tile.IDType != 90)
+                {
+                    isDead = true;
+                }
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
         {
             SpriteEffects rotation = direction.X == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            texture.Sprite.Draw(spriteBatch, position, Game1.Scale, rotation);
+            currentSpriteSheet.Sprite.Draw(spriteBatch, position, Game1.Scale, rotation);
+        }
+
+        protected override Vector2 ChangeDirection(Vector2 velocity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

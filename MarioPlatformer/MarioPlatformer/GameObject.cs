@@ -14,6 +14,8 @@ namespace MarioPlatformer
         protected Vector2 position;
         protected Vector2 size;
 
+        public bool collidable = true;
+
         public GameObject(SpriteSheet texture, Level level, Vector2 position, Vector2 size)
         {
             this.currentSpriteSheet = texture;
@@ -38,6 +40,10 @@ namespace MarioPlatformer
             List<GameObject> collidingObjects = new List<GameObject>();
             foreach (GameObject collider in colliders)
             {
+                if (!collider.collidable)
+                {
+                    continue;
+                }
                 if (bounds.Intersects(collider.Bounds))
                 {
                     collidingObjects.Add(collider);
