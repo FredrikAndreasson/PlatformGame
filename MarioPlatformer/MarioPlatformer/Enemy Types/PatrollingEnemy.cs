@@ -32,6 +32,7 @@ namespace MarioPlatformer
         protected override void InternalUpdate(GameTime gameTime)
         {
             direction.X = velocity.X > 0 ? 1 : -1;
+            facingLeft = direction.X == 1 ? true : false;
 
             ChangeDirection();
         }

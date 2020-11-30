@@ -97,13 +97,12 @@ namespace MarioPlatformer
 
         private void PlayerCollision(Enemy enemy, GameTime gameTime)
         {
-            
             if(player.Bounds.Intersects(enemy.Bounds))
             {
                 if (player.IsOnTopOf(enemy))
                 {
                     enemy.isDead = true;
-                    player.CollisionJump(300.0f);
+                    player.CollisionJump(350.0f);
                 }
                 else
                 {
@@ -143,6 +142,7 @@ namespace MarioPlatformer
             {
                 if (enemies[i] is Cannon)
                 {
+                    enemies[i].Update(gameTime);
                     continue;
                 }
                 PlayerCollision(enemies[i], gameTime);
