@@ -77,12 +77,11 @@ namespace MarioPlatformer
 
                 objects[i] = new Tile(sheet, this, tile.Position, tile.IDType);
             }
-
-            Enemy.Load(loader, this);
+                        
 
             for (int i = objects.Length - 1; i > -1; i--)
             {
-                Enemy enemy = Enemy.Get(objects[i].IDType);
+                Enemy enemy = Enemy.Get(loader, this, objects[i].IDType);
                 enemy.Position = objects[i].Position;
 
                 AddEnemy(enemy);
@@ -98,16 +97,19 @@ namespace MarioPlatformer
 
         private void PlayerCollision(Enemy enemy, GameTime gameTime)
         {
-            if (player.Bounds.Intersects(enemy.Bounds) && player.Position.Y < enemy.Position.Y)
+            
+            if(player.Bounds.Intersects(enemy.Bounds))
             {
-                enemy.isDead = true;
-                player.CollisionJump(300.0f);
-                 
-            }
-            else if(player.Bounds.Intersects(enemy.Bounds))
-            {
-                enemy.isDead = true;
-                player.Death(new Vector2(100,100));
+                if (player.IsOnTopOf(enemy))
+                {
+                    enemy.isDead = true;
+                    player.CollisionJump(300.0f);
+                }
+                else
+                {
+                    enemy.isDead = true;
+                    player.Death(new Vector2(100, 100));
+                }                
             }
         }
 

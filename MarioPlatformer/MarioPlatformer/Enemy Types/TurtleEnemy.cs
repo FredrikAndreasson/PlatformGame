@@ -14,14 +14,22 @@ namespace MarioPlatformer
         private SpriteSheet walkingSpriteSheet;
         private SpriteSheet shellSpriteSheet;
 
+        private float height;
+
         public TurtleEnemy(SpriteSheet texture, Level level, Vector2 position, Vector2 size, int health, float speed) : base(texture, level, position, size, health, speed)
         {
             velocity.X = 1;
             walkingSpriteSheet = texture.GetSubAt(0, 0, 2, 0,size);
-            shellSpriteSheet = texture.GetSubAt(2, 0, 2, 0,size);
+            shellSpriteSheet = texture.GetSubAt(2, 0, 2, 0, new Vector2(17,14));
+
+            height = 24.0f;
 
             currentSpriteSheet = walkingSpriteSheet;
         }
+
+        public override Rectangle Bounds => new Rectangle((int)Position.X, (int)Position.Y, (int)(size.X * Game1.Scale.X), (int)(height * Game1.Scale.Y));
+
+
         protected override void ChangeDirection()
         {
             foreach (Tile tile in level.Tiles)
@@ -50,13 +58,14 @@ namespace MarioPlatformer
             {
                 currentSpriteSheet = shellSpriteSheet;
                 speed = 300.0f;
+                height = 14.0f;
             }
             ChangeDirection();
         }
 
         protected override void InternalUpdateAnimation(GameTime gameTime)
         {
-                currentSpriteSheet.XIndex++;
+            currentSpriteSheet.XIndex++;
         }
     }
 }

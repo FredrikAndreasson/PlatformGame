@@ -38,7 +38,7 @@ namespace MarioPlatformer
 
         public Vector2 Size => size;
 
-        public Rectangle Bounds => new Rectangle((int)Position.X, (int)Position.Y, (int)(size.X * Game1.Scale.X), (int)(size.Y * Game1.Scale.Y));
+        public virtual Rectangle Bounds => new Rectangle((int)Position.X, (int)Position.Y, (int)(size.X * Game1.Scale.X), (int)(size.Y * Game1.Scale.Y));
         
         public GameObject[] GetColliders(GameObject[] colliders)
         {
@@ -72,6 +72,22 @@ namespace MarioPlatformer
             int leftDistance = collider.Bounds.Left - Bounds.Right;
             int rightDistance = Bounds.Left - collider.Bounds.Right;
             if (yDistance >= -5 && leftDistance <= -5 && rightDistance <= -5)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsOnTopOf(Enemy collider)
+        {
+            if (!collider.collidable)
+            {
+                return false;
+            }
+            int yDistance = collider.Bounds.Top - Bounds.Bottom;
+            int leftDistance = collider.Bounds.Left - Bounds.Right;
+            int rightDistance = Bounds.Left - collider.Bounds.Right;
+            if (yDistance >= -5)
             {
                 return true;
             }
