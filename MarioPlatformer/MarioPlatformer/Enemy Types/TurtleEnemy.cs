@@ -40,23 +40,34 @@ namespace MarioPlatformer
         protected override void InternalUpdate(GameTime gameTime)
         {
             direction.X = velocity.X > 0 ? 1 : -1;
+            facingLeft = direction.X == 1 ? false : true;
+
             if (isDead && !isShell)
             {
                 isShell = true;
+                speed = 0;
+                velocity.X = 0;
                 isDead = false;
-            }
-
-            if (isShell)
-            {
                 currentSpriteSheet = shellSpriteSheet;
+                size.Y = 17;
+            }
+            if (isDead && isShell && speed == 0)
+            {
+                velocity.X = 1;
                 speed = 300.0f;
+                isDead = false;
+                
             }
             ChangeDirection();
         }
 
         protected override void InternalUpdateAnimation(GameTime gameTime)
         {
+            if (speed != 0.0f)
+            {
                 currentSpriteSheet.XIndex++;
+            }
+                
         }
     }
 }
