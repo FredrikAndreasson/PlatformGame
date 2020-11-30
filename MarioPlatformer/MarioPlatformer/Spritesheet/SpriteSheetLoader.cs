@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MarioPlatformer
 {
-    class SpriteSheetLoader
+    public class SpriteSheetLoader
     {
         private Dictionary<string, Texture2D> textures;
 

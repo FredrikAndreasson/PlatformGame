@@ -27,8 +27,7 @@ namespace MarioPlatformer
 
             this.graphicsDevice = graphicsDevice;
 
-            this.level = new Level(loader, LevelData.LoadLevelData("Content\\Level1.lvl"));
-            
+            this.level = new Level(loader, LevelData.LoadLevelData("Content\\Level1.lvl"));            
 
             this.debugTexture = loader.CreateRectangleTexture((int)(Tile.SIZE * Game1.Scale.X), (int)(Tile.SIZE * Game1.Scale.Y), new Color(255, 255, 255, 255));
             this.collisionTexture = loader.CreateFilledTexture((int)(Tile.SIZE * Game1.Scale.X), (int)(Tile.SIZE * Game1.Scale.Y), new Color(255, 255, 255, 255));
@@ -36,23 +35,7 @@ namespace MarioPlatformer
             this.camera = new Camera(graphicsDevice.Viewport);
 
             backgroundManager = new ParalaxBackgroundManager(level.MyPlayer, loader, graphicsDevice, window);
-
-            for (int i = 0; i < level.Tiles.Length; i++)
-            {
-                if (level.Tiles[i].IDType == 90)
-                {
-                    //int direction = Game1.random.Next(2);
-                    //direction = direction == 1 ? -1 : 1;
-                    //ShootingObstacle shooting = new ShootingObstacle(loader.LoadSpriteSheet("Obstacles\\canon", Vector2.Zero, new Vector2(16, 16), 0),level,level.Tiles[i].Position,new Vector2(16*Game1.Scale.X,16*Game1.Scale.Y),new Vector2(direction, 0),loader.LoadSpriteSheet("Obstacles\\bullet",Vector2.Zero,new Vector2(16,13),0));
-                    //level.AddEnemy(shooting);
-                }
-            }
-
-            for (int i = level.Objects.Length-1; i > -1; i--)
-            {
-                Enemy patrolling = new PatrollingEnemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 20), 1), level, level.Objects[i].Position + new Vector2(0, -100), new Vector2(15, 19), 1, 70.0f);//new Vector2(15 * Game1.Scale.X, 19 * Game1.Scale.Y)
-                level.AddEnemy(patrolling);
-            }
+                                   
         }
 
 
@@ -86,10 +69,10 @@ namespace MarioPlatformer
                 {
                     spriteBatch.Draw(debugTexture, tile.Bounds, new Color(0, 255, 0, 128));
                 }
-
-                if (level.Enemies.Count > 1)
+                
+                foreach (Enemy enemy in level.Enemies)
                 {
-                    spriteBatch.Draw(debugTexture, level.Enemies[1].Bounds, new Color(0, 255, 0, 128));
+                    spriteBatch.Draw(debugTexture, enemy.Bounds, new Color(0, 255, 0, 128));
                 }
                 //spriteBatch.Draw(debugTexture, player.Bounds, new Color(0, 255, 0, 128));
 

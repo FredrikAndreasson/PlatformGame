@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MarioPlatformer
 {
-    class Camera
+    public class Camera
     {
         private Matrix transform;
         private Viewport view;

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MarioPlatformer
 {
-    class Level
+    public class Level
     {
         private LevelData levelData;
         private SpriteSheet spritesheet;
@@ -77,6 +77,16 @@ namespace MarioPlatformer
 
                 objects[i] = new Tile(sheet, this, tile.Position, tile.IDType);
             }
+
+            Enemy.Load(loader, this);
+
+            for (int i = objects.Length - 1; i > -1; i--)
+            {
+                Enemy enemy = Enemy.Get(objects[i].IDType);
+                enemy.Position = objects[i].Position;
+
+                AddEnemy(enemy);
+            }
         }
 
         
@@ -86,11 +96,13 @@ namespace MarioPlatformer
             enemies.Add(enemy);
         }
 
-        private void PlayerCollision(Enemy enemy)
+        private void PlayerCollision(Enemy enemy, GameTime gameTime)
         {
             if (player.Bounds.Intersects(enemy.Bounds) && player.Position.Y < enemy.Position.Y)
             {
-                 enemy.isDead = true;
+                enemy.isDead = true;
+                player.CollisionJump(300.0f);
+                 
             }
             else if(player.Bounds.Intersects(enemy.Bounds))
             {
@@ -128,11 +140,11 @@ namespace MarioPlatformer
             {
                 enemies[i].Update(gameTime);
 
-                if (enemies[i] is ShootingObstacle)
+                if (enemies[i] is Cannon)
                 {
                     continue;
                 }
-                PlayerCollision(enemies[i]);
+                PlayerCollision(enemies[i], gameTime);
             }
             DeadEnemyCheck();
 

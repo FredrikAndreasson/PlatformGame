@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MarioPlatformer
 {
-    abstract class GameObject
+    public abstract class GameObject
     {
         protected SpriteSheet currentSpriteSheet;
         protected Level level;
@@ -24,7 +24,17 @@ namespace MarioPlatformer
             this.size = size;
         }
 
-        public Vector2 Position => position;
+        public Vector2 Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                position = value;
+            }
+        }
 
         public Vector2 Size => size;
 

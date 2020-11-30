@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MarioPlatformer
 {
-    class Tile : GameObject
+    public class Tile : GameObject
     {
         public static readonly int SIZE = 16;
 

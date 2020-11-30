@@ -6,11 +6,11 @@ using System.Text;
 
 namespace MarioPlatformer
 {
-    abstract class Enemy : Character
+    public abstract class Enemy : Character
     {
         public bool isDead = false;
 
-        private static Dictionary<int, Enemy> enemies;
+        private static Dictionary<int, Enemy> enemies = new Dictionary<int, Enemy>();
 
         public Enemy(SpriteSheet texture, Level level, Vector2 position, Vector2 size, int health, float speed) : base(texture, level, position, size, health, speed)
         {
@@ -19,6 +19,7 @@ namespace MarioPlatformer
 
         protected override void InternalUpdateAnimation(GameTime gameTime)
         {
+
         }
 
         protected abstract void ChangeDirection();
@@ -30,14 +31,16 @@ namespace MarioPlatformer
 
         public static void Load(SpriteSheetLoader loader, Level level)
         {
-            enemies[90] = new ShootingObstacle(loader.LoadSpriteSheet("Obstacles\\canon", Vector2.Zero, new Vector2(16, 16), 0), level, Vector2.Zero, new Vector2(16 * Game1.Scale.X, 16 * Game1.Scale.Y), new Vector2(-1, 0), loader.LoadSpriteSheet("Obstacles\\bullet", Vector2.Zero, new Vector2(16, 13), 0));
+            enemies.Clear();
+            enemies[90] = new Cannon(loader.LoadSpriteSheet("Obstacles\\canon", Vector2.Zero, new Vector2(16, 16), 0), level, Vector2.Zero, new Vector2(16, 16), loader.LoadSpriteSheet("Obstacles\\bullet", Vector2.Zero, new Vector2(16, 13), 0));
+            enemies[91] = new PatrollingEnemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 20), 1), level, Vector2.Zero, new Vector2(15, 19), 1, 70.0f);
         }
 
         public static Enemy Get(int id)
         {
             if(enemies.ContainsKey(id))
             {
-                return enemies[id];
+                return (Enemy)enemies[id].MemberwiseClone();
             }
 
             return null;

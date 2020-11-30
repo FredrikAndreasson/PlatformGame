@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MarioPlatformer
 {
-    abstract class Character : GameObject
+    public abstract class Character : GameObject
     {
         protected int health;
         protected float speed;
@@ -16,6 +16,7 @@ namespace MarioPlatformer
 
         private float jumpPower;
         protected bool jumping;
+        protected bool collisionJump;
         protected bool doneJumping;
         protected bool walking;
         protected bool running;
@@ -31,12 +32,6 @@ namespace MarioPlatformer
             this.speed = speed;
         }
         
-
-        public Vector2 GetTotalVelocity(GameTime gameTime)
-        {
-            return speed * (velocity + direction) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-
         protected abstract void InternalUpdateAnimation(GameTime gameTime);
 
         protected void UpdateAnimation(GameTime gameTime)
@@ -63,7 +58,7 @@ namespace MarioPlatformer
 
         protected void UpdateVelocity(GameTime gameTime)
         {
-            if(jumping)
+            if(jumping || collisionJump)
             {
                 velocity.Y -= jumpPower;
                 jumpPower = 0.0f;
@@ -76,6 +71,7 @@ namespace MarioPlatformer
             {
                 jumpTimer = 0.0f;
                 jumping = false;
+                collisionJump = false;
             }
 
             Vector2 totalVelocity = (velocity + (direction * speed)) * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -109,6 +105,7 @@ namespace MarioPlatformer
                     newPosition.Y = collider.Bounds.Top - Bounds.Height + 1;
                     velocity.Y = 0;
                     doneJumping = true;
+                    collisionJump = false;
                 }
                 else if (IsBelow(collider))
                 {
@@ -128,21 +125,19 @@ namespace MarioPlatformer
             position = newPosition;
         }
         
-        protected void Jump(GameTime gameTime)
+        public void Jump(float power)
         {
-            GameObject[] colliders = GetColliders(level.Tiles);
-            foreach(GameObject collider in colliders)
-            {
-                if(IsOnTopOf(collider) && !jumping)
-                {
-                    jumpPower = 400.0f;
-                    jumping = true;
-                    jumpTimer = 250.0f;
-                    velocity.Y = 0;
-                    doneJumping = false;
-                    break;
-                }
-            }
+            jumpPower = power;
+            jumping = true;
+            jumpTimer = 250.0f;
+            velocity.Y = 0;
+            doneJumping = false;
+        }
+
+        public void CollisionJump(float power = 400.0f)
+        {
+            Jump(power);
+            collisionJump = true;
         }
 
         protected abstract void InternalUpdate(GameTime gameTime);

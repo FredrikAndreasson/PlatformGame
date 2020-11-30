@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MarioPlatformer
 {       
-    class LevelData
+    public class LevelData
     {
         private string spritesheetFilePath;
         private Tile[] tiles;

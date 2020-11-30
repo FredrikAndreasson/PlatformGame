@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MarioPlatformer
 {
-    class Player : Character
+    public class Player : Character
     {
 
         private SpriteSheet idleSpriteSheet;
@@ -97,9 +97,24 @@ namespace MarioPlatformer
                 speed = walkSpeed;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.W))
+            bool canJump = false;
+            GameObject[] colliders = GetColliders(level.Tiles);
+            foreach (GameObject collider in colliders)
             {
-                Jump(gameTime);
+                if (IsOnTopOf(collider) && !jumping)
+                {
+                    canJump = true;
+                    break;
+                }
+            }
+
+
+            if ((Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.W)))
+            {
+                if(canJump)
+                {
+                    Jump(400.0f);
+                }
             }
             else
             {
