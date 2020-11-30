@@ -54,6 +54,10 @@ namespace MarioPlatformer
 
         public bool IsOnTopOf(GameObject collider)
         {
+            if (!collider.collidable)
+            {
+                return false;
+            }
             int yDistance = collider.Bounds.Top - Bounds.Bottom;
             int leftDistance = collider.Bounds.Left - Bounds.Right;
             int rightDistance = Bounds.Left - collider.Bounds.Right;
@@ -66,6 +70,10 @@ namespace MarioPlatformer
 
         public bool IsBelow(GameObject collider)
         {
+            if (!collider.collidable)
+            {
+                return false;
+            }
             int yDistance = collider.Bounds.Bottom - Bounds.Top;
             int leftDistance = Bounds.Right - collider.Bounds.Left;
             int rightDistance = collider.Bounds.Right - Bounds.Left;
@@ -79,6 +87,10 @@ namespace MarioPlatformer
 
         public bool IsLeftOf(GameObject collider)
         {
+            if (!collider.collidable)
+            {
+                return false;
+            }
             int leftDistance = Bounds.Left - collider.Bounds.Right;
             int rightDistance = Bounds.Right - collider.Bounds.Right;
             int topDistance = collider.Bounds.Top - Bounds.Bottom;
@@ -91,6 +103,10 @@ namespace MarioPlatformer
 
         public bool IsRightOf(GameObject collider)
         {
+            if (!collider.collidable)
+            {
+                return false;
+            }
             int rightDistance = collider.Bounds.Left - Bounds.Right;
             int leftDistance = collider.Bounds.Left - Bounds.Left;
             int topDistance = collider.Bounds.Top - Bounds.Bottom;

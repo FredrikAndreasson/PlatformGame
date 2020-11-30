@@ -46,12 +46,17 @@ namespace MarioPlatformer
                     ShootingObstacle shooting = new ShootingObstacle(loader.LoadSpriteSheet("Obstacles\\canon", Vector2.Zero, new Vector2(16, 16), 0),level,level.Tiles[i].Position,new Vector2(16*Game1.Scale.X,16*Game1.Scale.Y),new Vector2(direction, 0),loader.LoadSpriteSheet("Obstacles\\bullet",Vector2.Zero,new Vector2(16,13),0));
                     level.AddEnemy(shooting);
                 }
-
+                if (level.Tiles[i].IDType == 91)
+                {
+                    Enemy patrolling = new PatrollingEnemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 20), 1),level, level.Tiles[i].Position + new Vector2(0,-100) , new Vector2(15, 19),1, 70.0f);//new Vector2(15 * Game1.Scale.X, 19 * Game1.Scale.Y)
+                    level.AddEnemy(patrolling);
+                }
             }
-            //Enemies.Add(new Enemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 36)),level, new Vector2(100,0),new Vector2(15,36), 5, 30.0f));
-            for (int i = 0; i < level.Objects.Length; i++)
+
+            for (int i = level.Objects.Length-1; i > -1; i--)
             {
-                //SpawnEnemy(level.Objects[i].IDType, level.Objects[i].Position, loader);
+                Enemy patrolling = new PatrollingEnemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 20), 1), level, level.Objects[i].Position + new Vector2(0, -100), new Vector2(15, 19), 1, 70.0f);//new Vector2(15 * Game1.Scale.X, 19 * Game1.Scale.Y)
+                level.AddEnemy(patrolling);
             }
         }
 
@@ -87,6 +92,10 @@ namespace MarioPlatformer
                     spriteBatch.Draw(debugTexture, tile.Bounds, new Color(0, 255, 0, 128));
                 }
 
+                if (level.Enemies.Count > 1)
+                {
+                    spriteBatch.Draw(debugTexture, level.Enemies[1].Bounds, new Color(0, 255, 0, 128));
+                }
                 //spriteBatch.Draw(debugTexture, player.Bounds, new Color(0, 255, 0, 128));
 
                 GameObject[] colliders = level.MyPlayer.GetColliders(level.Tiles);

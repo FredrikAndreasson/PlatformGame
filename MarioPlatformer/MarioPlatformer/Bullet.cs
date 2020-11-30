@@ -40,9 +40,8 @@ namespace MarioPlatformer
             currentSpriteSheet.Sprite.Draw(spriteBatch, position, Game1.Scale, rotation);
         }
 
-        protected override Vector2 ChangeDirection(Vector2 velocity)
+        protected override void ChangeDirection()
         {
-            throw new NotImplementedException();
         }
     }
 }

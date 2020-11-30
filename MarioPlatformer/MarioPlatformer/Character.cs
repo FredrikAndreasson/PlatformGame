@@ -21,7 +21,7 @@ namespace MarioPlatformer
         protected bool running;
         protected double jumpTimer;
 
-        private float msSinceLastFrame;
+        protected float msSinceLastFrame;
         protected float msPerFrame = 200;
         protected bool facingLeft;
 

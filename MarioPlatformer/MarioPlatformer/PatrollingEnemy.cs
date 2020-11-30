@@ -10,34 +10,43 @@ namespace MarioPlatformer
     {
         public PatrollingEnemy(SpriteSheet texture, Level level, Vector2 position, Vector2 size, int health, float speed) : base(texture, level, position, size, health, speed)
         {
-            velocity.X = -1;
+            velocity.X = 1;
+            currentSpriteSheet = texture.GetSubAt(0, 0, 3, 0);
         }
 
-        protected override Vector2 ChangeDirection(Vector2 velocity)
+        protected override void ChangeDirection()
         {
             foreach (Tile tile in level.Tiles)
             {
                 if (IsRightOf(tile))
                 {
-                    return new Vector2(1, 0);
+                    velocity.X = -1;
                 }
                 else if (IsLeftOf(tile))
                 {
-                    return new Vector2(-1, 0);
+                    velocity.X = 1;
                 }
             }
-
-            return direction;
         }
 
         protected override void InternalUpdate(GameTime gameTime)
         {
-            //direction = ChangeDirection(direction);
-            //velocity *= direction;
+            direction.X = velocity.X > 0 ? 1 : -1;
+
+            ChangeDirection();
         }
 
         protected override void InternalUpdateAnimation(GameTime gameTime)
         {
+            if (msPerFrame < msSinceLastFrame)
+            {
+                currentSpriteSheet.XIndex++;
+                msSinceLastFrame = 0;
+            }
+            else
+            {
+                msSinceLastFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
         }
     }
 }
