@@ -11,6 +11,8 @@ namespace MarioPlatformer
     {
         private SpriteSheetLoader loader;
         private Dictionary<Vector2, Tile> tiles;
+        private Dictionary<Vector2, Tile> gameObjectTiles;
+
         private Camera camera;
         private Viewport levelViewport;
         private Viewport paletteViewport;
@@ -32,7 +34,8 @@ namespace MarioPlatformer
         public Editor(SpriteSheetLoader loader, GameWindow window)
         {
             this.loader = loader;
-            this.tiles = new Dictionary<Vector2, Tile>();            
+            this.tiles = new Dictionary<Vector2, Tile>();
+            this.gameObjectTiles = new Dictionary<Vector2, Tile>();
             this.camera = new Camera(new Viewport());
 
             this.mouseTile = GetTileOnCursor();
@@ -78,7 +81,9 @@ namespace MarioPlatformer
         {
             Tile[] tilesData = new Tile[tiles.Count];
             tiles.Values.CopyTo(tilesData, 0);
-            LevelData data = new LevelData("blocks", tilesData);
+            Tile[] objectData = new Tile[gameObjectTiles.Count];
+            gameObjectTiles.Values.CopyTo(objectData, 0);
+            LevelData data = new LevelData("blocks", tilesData, objectData);
             return data;
         }
 
@@ -107,7 +112,14 @@ namespace MarioPlatformer
                 if(insideLevel)
                 {
                     int type = (int)((selectedPaletteIndex.X) + (selectedPaletteIndex.Y * palette.Columns));
-                    tiles[mouseTile] = new Tile(selectedPalette, null, mouseTile, type);
+                    if(type == 90 || type == 91)
+                    {
+                        gameObjectTiles[mouseTile] = new Tile(selectedPalette, null, mouseTile, type);
+                    }
+                    else
+                    {
+                        tiles[mouseTile] = new Tile(selectedPalette, null, mouseTile, type);
+                    }
                 }
                 else
                 {
@@ -144,8 +156,17 @@ namespace MarioPlatformer
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null,null, camera.Transform);
-            foreach(Tile tile in tiles.Values)
+            foreach (Tile tile in tiles.Values)
             {
+                tile.Draw(spriteBatch);
+            }
+            foreach (Tile tile in gameObjectTiles.Values)
+            {
+                /*int x = entry.Value % palette.Columns;
+                int y = entry.Value / palette.Columns;
+                Sprite sprite = palette.GetSubAt(x, y, 1, 1).Sprite;
+                sprite.Draw(spriteBatch, entry.Key, Game1.Scale);*/
+
                 tile.Draw(spriteBatch);
             }
 

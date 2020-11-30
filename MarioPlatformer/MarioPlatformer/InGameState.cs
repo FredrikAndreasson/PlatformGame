@@ -19,14 +19,14 @@ namespace MarioPlatformer
 
         ParalaxBackgroundManager backgroundManager;
 
-        private bool debug = false;
+        private bool debug = true;
         private Texture2D debugTexture;
         private Texture2D collisionTexture;
         
         //Move Enemy logic to the level class
         List<ShootingObstacle> shootingObstacles = new List<ShootingObstacle>();
         List<Enemy> Enemies = new List<Enemy>();
-
+        
 
         public InGameState(SpriteSheetLoader loader, GraphicsDevice graphicsDevice, GameWindow window)
         {
@@ -54,9 +54,19 @@ namespace MarioPlatformer
                 }
             }
             //Enemies.Add(new Enemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 36)),level, new Vector2(100,0),new Vector2(15,36), 5, 30.0f));
-
-            
+            for (int i = 0; i < level.Objects.Length; i++)
+            {
+                SpawnEnemy(level.Objects[i].IDType, level.Objects[i].Position, loader);
+            }
         }
+
+        private void SpawnEnemy(int id, Vector2 position, SpriteSheetLoader loader)
+        {
+            SpriteSheet bulletTexture = loader.LoadSpriteSheet("Obstacles\\bullet", Vector2.Zero, new Vector2(16, 13), 0);
+            Enemies.Add(new Enemy(loader.LoadSpriteSheet("Obstacles\\canon"), level, position, new Vector2(16, 16), 1, 1));
+
+        }
+
         private void PlayerCollisionHandling()
         {
             foreach (ShootingObstacle canon in shootingObstacles)

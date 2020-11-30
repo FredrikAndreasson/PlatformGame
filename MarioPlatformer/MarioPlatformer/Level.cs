@@ -8,11 +8,11 @@ namespace MarioPlatformer
 {
     class Level
     {
-
         private LevelData levelData;
         private SpriteSheet spritesheet;
         
         private Tile[] tiles;
+        private Tile[] objects;
 
         private bool isDay = true;
 
@@ -30,6 +30,8 @@ namespace MarioPlatformer
         public bool IsDay => isDay;
 
         public Tile[] Tiles => tiles;
+
+        public Tile[] Objects => objects;
 
 
         private void Create(SpriteSheetLoader loader)
@@ -49,6 +51,21 @@ namespace MarioPlatformer
                 sheet.YIndex = sy;
 
                 tiles[i] = new Tile(sheet, this, tile.Position, tile.IDType);
+            }
+
+            this.objects = new Tile[levelData.Objects.Length];
+            for (int i = 0; i < levelData.Objects.Length; i++)
+            {
+                Tile tile = levelData.Objects[i];
+
+                int sx = (int)tile.IDType % spritesheet.Columns;
+                int sy = (int)tile.IDType / spritesheet.Columns;
+
+                SpriteSheet sheet = loader.LoadSpriteSheet(levelData.SpriteSheetFilePath, Vector2.Zero, new Vector2(16, 16), 0);
+                sheet.XIndex = sx;
+                sheet.YIndex = sy;
+
+                objects[i] = new Tile(sheet, this, tile.Position, tile.IDType);
             }
         }
 
