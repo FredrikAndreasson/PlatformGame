@@ -71,7 +71,7 @@ namespace MarioPlatformer
             int yDistance = collider.Bounds.Top - Bounds.Bottom;
             int leftDistance = collider.Bounds.Left - Bounds.Right;
             int rightDistance = Bounds.Left - collider.Bounds.Right;
-            if (yDistance >= -5 && yDistance <= 4 && leftDistance <= -5 && rightDistance <= -5)
+            if (yDistance >= -5 && leftDistance <= -5 && rightDistance <= -5)
             {
                 return true;
             }
@@ -135,7 +135,8 @@ namespace MarioPlatformer
             int leftDistance = Bounds.Left - collider.Bounds.Right;
             int rightDistance = Bounds.Right - collider.Bounds.Right;
             int topDistance = collider.Bounds.Top - Bounds.Bottom;
-            if (leftDistance <= 0 && rightDistance > 0 && topDistance <= -5)
+            int bottomDistance = collider.Bounds.Bottom - Bounds.Top;
+            if (leftDistance <= 0 && rightDistance > 0 && topDistance <= -5 && bottomDistance >= 0)
             {
                 return true;
             }
@@ -151,7 +152,8 @@ namespace MarioPlatformer
             int rightDistance = collider.Bounds.Left - Bounds.Right;
             int leftDistance = collider.Bounds.Left - Bounds.Left;
             int topDistance = collider.Bounds.Top - Bounds.Bottom;
-            if (rightDistance <= 0 && leftDistance > 0 && topDistance <= -5)
+            int bottomDistance = collider.Bounds.Bottom - Bounds.Top;
+            if (rightDistance <= 0 && leftDistance > 0 && topDistance <= -5 && bottomDistance >= 0)
             {
                 return true;
             }

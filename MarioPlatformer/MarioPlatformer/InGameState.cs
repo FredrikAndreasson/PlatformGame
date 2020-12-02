@@ -15,6 +15,11 @@ namespace MarioPlatformer
         private Level level;
         private HUD hud;
 
+        int currentLvlIndex = 1;
+        private SpriteSheetLoader loader;
+
+        private bool gameOver;
+
         private GraphicsDevice graphicsDevice;
         private ParalaxBackgroundManager backgroundManager;
 
@@ -27,6 +32,7 @@ namespace MarioPlatformer
 
         public InGameState(SpriteSheetLoader loader, GraphicsDevice graphicsDevice, GameWindow window)
         {
+            this.loader = loader;
 
             this.graphicsDevice = graphicsDevice;
 
@@ -44,6 +50,22 @@ namespace MarioPlatformer
             backgroundManager = new ParalaxBackgroundManager(level.MyPlayer, loader, graphicsDevice, window);
         }
 
+        private void CheckNextLevel()
+        {
+            if (!level.LvlWon)
+            {
+                return;
+            }
+            currentLvlIndex++;
+            if (currentLvlIndex>5)
+            {
+                gameOver = true;
+                currentLvlIndex = 5;
+                return;
+            }
+            this.level = new Level(loader, LevelData.LoadLevelData("Content\\Level" + currentLvlIndex + ".lvl"), hud);
+
+        }
 
         public override void Update(GameTime gameTime)
         {
@@ -53,6 +75,8 @@ namespace MarioPlatformer
 
 
             backgroundManager.Update(level.IsDay);
+
+            CheckNextLevel();
 
             if(level.MyPlayer.Health <= 0 && !highscoresSaved)
             {

@@ -6,27 +6,34 @@ using System.Text;
 
 namespace MarioPlatformer
 {
-    class FireBall : GameObject
+    public class FireBall : GameObject
     {
-        int bouncesLeft;
-        float speed;
+        private float speed;
 
-        Vector2 velocity;
-        bool colliding = false;
+        private Vector2 velocity;
+        private bool colliding = false;
 
-        SpriteSheet explosionSheet;
+        private SpriteSheet explosionSheet;
 
-        public FireBall(SpriteSheet texture, Level level, Vector2 position, Vector2 size, Vector2 velocity, int bouncesLeft = 8, float speed = 150.0f) : base(texture, level, position, size)
+        private float msPerFrame = 100;
+        private float msSinceLastFrame = 0;
+
+        public bool exploding;
+        private float explosionTime;
+        private bool isDead;
+
+        public FireBall(SpriteSheet texture, Level level, Vector2 position, Vector2 size, Vector2 velocity, float speed = 150.0f) : base(texture, level, position, size)
         {
-            this.bouncesLeft = bouncesLeft;
             this.speed = speed;
 
             currentSpriteSheet = texture.GetSubAt(0, 0, 7, 1);
 
-            explosionSheet = texture.GetSubAt(7, 0, 1, 1);
+            explosionSheet = texture.GetSubAt(8, 0, 1, 1);
 
             this.velocity = velocity;
         }
+
+        public bool IsDead => isDead;
 
         public bool FireIsOnTopOf(GameObject collider)
         {
@@ -69,6 +76,8 @@ namespace MarioPlatformer
                 {
                     velocity = Vector2.Zero;
                     colliding = true;
+                    currentSpriteSheet = explosionSheet;
+                    exploding = true;
                     break;
                 }
                 if (FireIsOnTopOf(tile))
@@ -89,12 +98,36 @@ namespace MarioPlatformer
             {
                 velocity.Y += 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
+
+            if (exploding)
+            {
+                explosionTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
+            if (explosionTime > 100)
+            {
+                isDead = true;
+            }
+
             position.X += velocity.X * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             position.Y += velocity.Y;
+            Animation(gameTime);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
             currentSpriteSheet.Sprite.Draw(spriteBatch, position, Game1.Scale/2.0f);
+        }
+
+        private void Animation(GameTime gameTime)
+        {
+            if (msSinceLastFrame >= msPerFrame)
+            {
+                currentSpriteSheet.XIndex++;
+                msSinceLastFrame = 0;
+            }
+            else
+            {
+                msSinceLastFrame += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
         }
     }
     
