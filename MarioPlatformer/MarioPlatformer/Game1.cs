@@ -23,6 +23,8 @@ namespace MarioPlatformer
         private Editor editor;
 
         private SpriteSheetLoader spritesheetLoader;
+
+        private SpriteFont font;
        
 
         public Game1()
@@ -43,8 +45,15 @@ namespace MarioPlatformer
 
             spritesheetLoader = new SpriteSheetLoader(Content, GraphicsDevice);    
             
-            SpriteFont font = Content.Load<SpriteFont>(@"font");
+            font = Content.Load<SpriteFont>(@"font");
 
+            StartGame();
+            //gameState = editor;           
+
+        }
+
+        private void StartGame()
+        {
             HUD hud = new HUD(Window, 100, 100, spritesheetLoader.LoadTexture("score-numbers"), spritesheetLoader.LoadSpriteSheet("player", Vector2.Zero, new Vector2(16, 16)).GetAt(0, 0));
 
             menu = new MenuState(font, Window, hud);
@@ -53,12 +62,10 @@ namespace MarioPlatformer
             menu.Actions.Add(new MenuOption("2. Open Editor", () => gameState = editor));
             menu.Actions.Add(new MenuOption("3. Exit", () => Exit()));
 
-            inGameState = new InGameState(spritesheetLoader, GraphicsDevice, Window, hud);
+            inGameState = new InGameState(spritesheetLoader, GraphicsDevice, Window, hud, font);
             editor = new Editor(spritesheetLoader, Window);
             editor.LoadLevel("Content\\Level1.lvl");
             gameState = menu;
-            //gameState = editor;           
-
         }
 
         
@@ -70,6 +77,11 @@ namespace MarioPlatformer
 
 
             gameState.Update(gameTime);
+            if (gameState is InGameState && ((InGameState)gameState).restart)
+            {
+                StartGame();
+                gameState = menu;
+            }
         }
 
         protected override void Draw(GameTime gameTime)
