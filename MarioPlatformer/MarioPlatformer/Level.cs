@@ -95,6 +95,16 @@ namespace MarioPlatformer
             enemies.Add(enemy);
         }
 
+        private void PlayerCollision(Tile tile, GameTime gameTime)
+        {
+            if (player.Bounds.Intersects(tile.Bounds))
+            {
+                if (player.IsBelow(tile))
+                {
+
+                }
+            }
+        }
         private void PlayerCollision(Enemy enemy, GameTime gameTime)
         {
             if(player.Bounds.Intersects(enemy.Bounds))
