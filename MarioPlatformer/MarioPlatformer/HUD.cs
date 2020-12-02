@@ -17,10 +17,11 @@ namespace MarioPlatformer
 
         private SpriteSheet scoresheet;
         private Sprite lifeSprite;
-        
+
+        private List<int> highscores;
         private int highscore;
 
-        public HUD(GameWindow window, int topHeight, int bottomHeight, Texture2D numberTexture, Sprite lifeSprite, int highscore)
+        public HUD(GameWindow window, int topHeight, int bottomHeight, Texture2D numberTexture, Sprite lifeSprite)
         {
             this.window = window;
             this.topHeight = topHeight;
@@ -32,7 +33,7 @@ namespace MarioPlatformer
             this.scoresheet = new SpriteSheet(numberTexture, new Vector2(132, 1), new Vector2(35, 14), new Vector2(7, 7));
 
             this.lifeSprite = lifeSprite;
-            this.highscore = highscore;
+            this.highscore = LoadHighscore();
         }
 
         public Level CurrentLevel
@@ -57,6 +58,8 @@ namespace MarioPlatformer
             get;
             set;
         }
+
+        public List<int> Highscores => highscores;
 
         public int Highscore
         {
@@ -139,7 +142,49 @@ namespace MarioPlatformer
             DrawLives(spriteBatch, Player.Health, lifePosition, new Vector2(uiScale));
         }
 
-        
 
+        public int LoadHighscore()
+        {
+            string filePath = "Content\\Highscores.txt";
+            if (!File.Exists(filePath))
+            {
+                File.Create(filePath);
+                return 0;
+            }
+
+            StreamReader sr = new StreamReader(filePath);
+
+            highscores = new List<int>();
+
+            string currentLine;
+            while ((currentLine = sr.ReadLine()) != null)
+            {
+                int score = int.Parse(currentLine);
+                highscores.Add(score);
+            }
+
+            sr.Close();
+
+            if (highscores.Count == 0)
+            {
+                return 0;
+            }
+
+            highscores.Sort((o0, o1) => o1 - o0);
+            return highscores[0];
+        }
+
+        public void SaveHighscores()
+        {
+
+            StreamWriter writer = new StreamWriter(@"Content\\Highscores.txt", false);
+
+            foreach (int score in highscores)
+            {
+                writer.WriteLine(score);
+            }
+
+            writer.Close();
+        }
     }
 }

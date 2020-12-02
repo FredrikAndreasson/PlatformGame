@@ -53,6 +53,8 @@ namespace MarioPlatformer
 
             Texture2D rectangleTexture = loader.CreateRectangleTexture(Tile.SIZE, Tile.SIZE, Color.White);
             this.selectionSprite = new SpriteSheet(rectangleTexture).Sprite;
+
+            this.currentLevelPath = "Content\\Level1.lvl";
         }
 
         private SpriteSheet GetSpriteSheetAt(int x, int y)
