@@ -25,7 +25,7 @@ namespace MarioPlatformer
                 
         private bool highscoresSaved;
 
-        private bool debug = true;
+        private bool debug = false;
         private Texture2D debugTexture;
         private Texture2D collisionTexture;
 
@@ -71,6 +71,10 @@ namespace MarioPlatformer
             camera.CenterOn(level.MyPlayer.Position);
             camera.SetPosition(new Vector2(camera.Transform.Translation.X, camera.Bounds.Y > 0 ? camera.Transform.Translation.Y : 0));
 
+            if (level.MyPlayer.Health <= 0)
+            {
+                gameOver = true;
+            }
 
             backgroundManager.Update(level.IsDay);
 

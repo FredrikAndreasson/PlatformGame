@@ -170,11 +170,8 @@ namespace MarioPlatformer
         {
             if (player.Bounds.Intersects(spike.Bounds))
             {
-                if (player.IsOnTopOf((GameObject)spike))
-                {
-
-                }
-                player.Death(new Vector2(100, 100));
+                player.Death(playerSpawn);
+                player.Health--;
             }
         }
 
