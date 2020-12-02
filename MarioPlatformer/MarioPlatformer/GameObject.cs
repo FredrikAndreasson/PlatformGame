@@ -71,7 +71,7 @@ namespace MarioPlatformer
             int yDistance = collider.Bounds.Top - Bounds.Bottom;
             int leftDistance = collider.Bounds.Left - Bounds.Right;
             int rightDistance = Bounds.Left - collider.Bounds.Right;
-            if (yDistance >= -5 && leftDistance <= -5 && rightDistance <= -5)
+            if (yDistance >= -5 && yDistance <= 4 && leftDistance <= -5 && rightDistance <= -5)
             {
                 return true;
             }
@@ -85,8 +85,6 @@ namespace MarioPlatformer
                 return false;
             }
             int yDistance = collider.Bounds.Top - Bounds.Bottom;
-            int leftDistance = collider.Bounds.Left - Bounds.Right;
-            int rightDistance = Bounds.Left - collider.Bounds.Right;
             if (yDistance >= -5)
             {
                 return true;
@@ -109,6 +107,23 @@ namespace MarioPlatformer
             }
             return false;
         }
+        public bool IsBelow(PowerupBlock collider)
+        {
+            if (!collider.collidable)
+            {
+                return false;
+            }
+            int yDistance = collider.Bounds.Bottom - Bounds.Top;
+            int yDistfeet = collider.Bounds.Top - Bounds.Bottom;
+            int leftDistance = Bounds.Right - collider.Bounds.Left;
+            int rightDistance = collider.Bounds.Right - Bounds.Left;
+            if (yDistance >= -10 && yDistfeet <= -7 && leftDistance >= 5 && rightDistance >= 5)
+            {
+                return true;
+            }
+            return false;
+        }
+
 
 
         public bool IsLeftOf(GameObject collider)

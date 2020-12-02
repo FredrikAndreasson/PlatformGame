@@ -7,8 +7,6 @@ namespace MarioPlatformer
 {
     class TurtleEnemy : Enemy
     {
-        private float lifeTime; //After getting turned into a shell there is a certain amount of time until it despawns
-
         private bool isShell;
 
         private SpriteSheet walkingSpriteSheet;

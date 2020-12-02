@@ -14,6 +14,8 @@ namespace MarioPlatformer
         private Tile[] tiles;
         private Tile[] objects;
 
+        private List<PowerupBlock> powerupBlocks;
+
         private bool isDay = false;
 
         private Player player;
@@ -27,9 +29,11 @@ namespace MarioPlatformer
 
             SpriteSheet playerAnimationSheet = loader.LoadSpriteSheet("player");
 
-            this.player = new Player(playerAnimationSheet, this, new Vector2(0, 250), new Vector2(16, 16), 5, 200.0f);
+            this.player = new Player(playerAnimationSheet, this, new Vector2(0, 250), new Vector2(16, 16), 5, 200.0f, loader);
 
             this.enemies = new List<Enemy>();
+
+            this.powerupBlocks = new List<PowerupBlock>();
 
             Create(loader);
         }
@@ -86,6 +90,14 @@ namespace MarioPlatformer
 
                 AddEnemy(enemy);
             }
+
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                if (tiles[i].IDType == 0)
+                {
+                    powerupBlocks.Add(new PowerupBlock(loader.LoadSpriteSheet("blocks", Vector2.Zero, new Vector2(16, 16), 0), this, tiles[i].Position, new Vector2(16,16), loader));
+                }
+            }
         }
 
         
@@ -95,15 +107,24 @@ namespace MarioPlatformer
             enemies.Add(enemy);
         }
 
-        private void PlayerCollision(Tile tile, GameTime gameTime)
+        private void PlayerCollision(PowerupBlock powerupBlock, GameTime gameTime)
         {
-            if (player.Bounds.Intersects(tile.Bounds))
+            if (player.IsBelow(powerupBlock))
             {
-                if (player.IsBelow(tile))
+                if (!powerupBlock.collided)
                 {
-
+                    powerupBlock.collided = true;
                 }
             }
+            if (powerupBlock.powerup != null)
+            {
+                if (player.Bounds.Intersects(powerupBlock.powerup.Bounds) && powerupBlock.powerup.Type == Powerup.PowerupType.FireFlower)
+                {
+                    player.powerupTimer = 10000;
+                    powerupBlock.powerup.isDead = true;
+                }
+            }
+            
         }
         private void PlayerCollision(Enemy enemy, GameTime gameTime)
         {
@@ -158,8 +179,11 @@ namespace MarioPlatformer
                 PlayerCollision(enemies[i], gameTime);
                 enemies[i].Update(gameTime);
             }
-            
-
+            foreach (PowerupBlock powerupBlock in powerupBlocks)
+            {
+                powerupBlock.Update(gameTime);
+                PlayerCollision(powerupBlock, gameTime);
+            }
         }
         
 
@@ -168,7 +192,7 @@ namespace MarioPlatformer
             player.Draw(spriteBatch);
             foreach (Tile tile in tiles)
             {
-                if (tile.IDType != 91)
+                if (tile.IDType != 5)
                 {
                     tile.Draw(spriteBatch);
                 }
@@ -177,6 +201,10 @@ namespace MarioPlatformer
             foreach (Enemy enemy in enemies)
             {
                 enemy.Draw(spriteBatch);
+            }
+            foreach (PowerupBlock powerupBlock in powerupBlocks)
+            {
+                powerupBlock.Draw(spriteBatch);
             }
         }
         

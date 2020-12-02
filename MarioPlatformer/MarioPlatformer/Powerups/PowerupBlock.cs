@@ -1,17 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MarioPlatformer
 {
-    class PowerupBlock : GameObject
+    public class PowerupBlock : GameObject
     {
-        private Powerup powerup;
+        public Powerup powerup;
         private SpriteSheetLoader loader;
 
         public bool collided;
         private bool powerupSpawned = false;
+
+        int collidedIndex = 2;
+
 
         public PowerupBlock(SpriteSheet texture, Level level, Vector2 position, Vector2 size, SpriteSheetLoader loader) : base(texture, level, position, size)
         {
@@ -24,7 +28,7 @@ namespace MarioPlatformer
             if (collided && !powerupSpawned)
             {
                 int temp = Game1.random.Next(2);
-                if (temp == 1)
+                if (temp != 1)
                 {
                     powerup = new Powerup(loader.LoadSpriteSheet("Powerups\\coin", Vector2.Zero, new Vector2(14, 14), 1), level, Position, new Vector2(14, 14), Powerup.PowerupType.Coin);
                 }
@@ -34,11 +38,17 @@ namespace MarioPlatformer
 
                 }
                 powerupSpawned = true;
+                currentSpriteSheet.XIndex = collidedIndex;
             }
 
-            if (powerup.IsDead)
+            if (powerup == null)
             {
-                powerup = null;
+                return;
+            }
+            powerup.Update(gameTime);
+            if (powerup.isDead)
+            {
+                
                 if (powerup.Type == Powerup.PowerupType.FireFlower)
                 {
                     //Give the player the fireflower powerup...
@@ -47,7 +57,18 @@ namespace MarioPlatformer
                 {
                     //Increase player score by 1...
                 }
+                powerup = null;
             }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            if (powerup == null)
+            {
+                return;
+            }
+            powerup.Draw(spriteBatch);
         }
     }
 }

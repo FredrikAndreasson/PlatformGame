@@ -16,7 +16,7 @@ namespace MarioPlatformer
             this.ID = ID;
         }
 
-        public int IDType => ID; // basically index in spriteSheet; canon would be index 90 in total AKA type 90
+        public int IDType => ID; // basically index in spriteSheet; canon would be index 5 in total AKA type 5
         
     }
 }
