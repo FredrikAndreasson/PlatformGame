@@ -24,12 +24,15 @@ namespace MarioPlatformer
 
         private Vector2 playerSpawn;
 
+        private bool lvlWon;
         private bool clearedSpawns;
 
         public Level(SpriteSheetLoader loader, LevelData levelData, HUD hud)
         {
             this.levelData = levelData;
             this.hud = hud;
+
+            this.lvlWon = false;
 
             this.enemies = new List<Enemy>();
             this.powerupBlocks = new List<PowerupBlock>();
@@ -42,6 +45,7 @@ namespace MarioPlatformer
             this.player = new Player(playerAnimationSheet, this, playerSpawn, new Vector2(16, 16), 5, 200.0f, loader);
         }
 
+        public bool LvlWon => lvlWon;
 
         public bool IsDay => isDay;
 
@@ -155,6 +159,27 @@ namespace MarioPlatformer
             }
         }
 
+        private void FireEnemyCollision(Enemy enemy, FireBall fireBall)
+        {
+            if (enemy.Bounds.Intersects(fireBall.Bounds))
+            {
+                enemy.isDead = true;
+                fireBall.exploding = true;
+                hud.Score += 10;
+            }
+        }
+
+        private void WinCheck()
+        {
+            foreach (Tile tile in tiles)
+            {
+                if (player.IsOnTopOf(tile) && tile.IDType == 8)
+                {
+                    lvlWon = true;
+                }
+            }
+        }
+
         private void DeadEnemyCheck()
         {
             for (int i = enemies.Count-1; i > -1; i--)
@@ -179,9 +204,12 @@ namespace MarioPlatformer
                 }
                 clearedSpawns = true;
             }
+
+            WinCheck();
+
             DeadEnemyCheck();
             player.Update(gameTime);
-            for (int i = 0; i < enemies.Count; i++)
+            for (int i = enemies.Count-1; i > -1; i--)
             {
                 if (enemies[i] is Cannon)
                 {
@@ -190,6 +218,10 @@ namespace MarioPlatformer
                 }
                 PlayerCollision(enemies[i], gameTime);
                 enemies[i].Update(gameTime);
+                for (int j = player.fireBalls.Count-1; j > -1; j--)
+                {
+                    FireEnemyCollision(enemies[i], player.fireBalls[j]);
+                }
             }
             foreach (PowerupBlock powerupBlock in powerupBlocks)
             {

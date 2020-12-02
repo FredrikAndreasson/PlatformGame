@@ -13,17 +13,16 @@ namespace MarioPlatformer
 
         protected override void ChangeDirection()
         {
-            throw new NotImplementedException();
         }
 
         protected override void InternalUpdate(GameTime gameTime)
         {
-            base.InternalUpdate(gameTime);
+            
         }
 
         protected override void InternalUpdateAnimation(GameTime gameTime)
         {
-            base.InternalUpdateAnimation(gameTime);
+            currentSpriteSheet.XIndex++;
         }
     }
 }

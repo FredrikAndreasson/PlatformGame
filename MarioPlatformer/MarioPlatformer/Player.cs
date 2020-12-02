@@ -24,7 +24,8 @@ namespace MarioPlatformer
 
         public float powerupTimer;
 
-        List<FireBall> fireBalls;
+        public List<FireBall> fireBalls;
+
         private SpriteSheetLoader loader;
 
         private ButtonState lastMouseState;
@@ -50,7 +51,6 @@ namespace MarioPlatformer
             this.fireBalls = new List<FireBall>();
             this.loader = loader;
         }
-
 
         public void Death(Vector2 spawnPoint)
         {
@@ -186,6 +186,13 @@ namespace MarioPlatformer
             foreach (FireBall fireBall in fireBalls)
             {
                 fireBall.Update(gameTime);
+            }
+            for (int i = fireBalls.Count-1; i > -1; i--)
+            {
+                if (fireBalls[i].IsDead)
+                {
+                    fireBalls.RemoveAt(i);
+                }
             }
 
             lastMouseState = Mouse.GetState().LeftButton;

@@ -55,7 +55,8 @@ namespace MarioPlatformer
                 velocity.X = 0;
                 isDead = false;
                 currentSpriteSheet = shellSpriteSheet;
-                size.Y = 17;
+                height = 14;
+                
             }
             if (isDead && isShell && speed == 0)
             {
