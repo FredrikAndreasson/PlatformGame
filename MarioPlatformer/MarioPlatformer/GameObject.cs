@@ -85,7 +85,7 @@ namespace MarioPlatformer
                 return false;
             }
             int yDistance = collider.Bounds.Top - Bounds.Bottom;
-            if (yDistance >= -5)
+            if (yDistance >= -10)
             {
                 return true;
             }
