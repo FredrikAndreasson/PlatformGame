@@ -49,13 +49,9 @@ namespace MarioPlatformer
             if (powerup.isDead)
             {
                 
-                if (powerup.Type == Powerup.PowerupType.FireFlower)
+                if (powerup.Type == Powerup.PowerupType.Coin)
                 {
-                    //Give the player the fireflower powerup...
-                }
-                else
-                {
-                    //Increase player score by 1...
+                    level.scoreToAdd = 100;
                 }
                 powerup = null;
             }

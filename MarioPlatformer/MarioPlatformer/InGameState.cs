@@ -31,11 +31,8 @@ namespace MarioPlatformer
 
         public InGameState(SpriteSheetLoader loader, GraphicsDevice graphicsDevice, GameWindow window, HUD hud)
         {
-<<<<<<< HEAD
             this.loader = loader;
 
-=======
->>>>>>> 8e3b8504cd82a87ec431bab53dac45542550e065
             this.graphicsDevice = graphicsDevice;
 
             this.hud = hud; 
