@@ -22,6 +22,8 @@ namespace MarioPlatformer
         private Player player;
         private List<Enemy> enemies;
 
+        private Vector2 playerSpawn;
+
         private bool lvlWon;
         private bool clearedSpawns;
 
@@ -34,15 +36,15 @@ namespace MarioPlatformer
 
             this.lvlWon = false;
 
-            SpriteSheet playerAnimationSheet = loader.LoadSpriteSheet("player");
-
-            this.player = new Player(playerAnimationSheet, this, new Vector2(0, 250), new Vector2(16, 16), 5, 200.0f, loader);
-
             this.enemies = new List<Enemy>();
-
             this.powerupBlocks = new List<PowerupBlock>();
 
+            playerSpawn = new Vector2(0, 250);
+
             Create(loader);
+
+            SpriteSheet playerAnimationSheet = loader.LoadSpriteSheet("player");
+            this.player = new Player(playerAnimationSheet, this, playerSpawn, new Vector2(16, 16), 5, 200.0f, loader);
         }
 
         public bool LvlWon => lvlWon;
@@ -93,6 +95,12 @@ namespace MarioPlatformer
 
             for (int i = objects.Length - 1; i > -1; i--)
             {
+                if(objects[i].IDType == 10)
+                {
+                    playerSpawn = objects[i].Position;
+                    continue;
+                }
+
                 Enemy enemy = Enemy.Get(loader, this, objects[i].IDType);
                 enemy.Position = objects[i].Position;
 
@@ -153,7 +161,7 @@ namespace MarioPlatformer
                 else
                 {
                     enemy.isDead = true;
-                    player.Death(new Vector2(100, 100));
+                    player.Death(playerSpawn);
                     player.Health--;
                 }                
             }
