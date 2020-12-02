@@ -17,7 +17,7 @@ namespace MarioPlatformer
 
         private List<PowerupBlock> powerupBlocks;
 
-        private bool isDay = false;
+        private bool isDay = true;
 
         private Player player;
         private List<Enemy> enemies;
@@ -158,6 +158,17 @@ namespace MarioPlatformer
                 }                
             }
         }
+        private void PlayerCollision(Spike spike, GameTime gameTime)
+        {
+            if (player.Bounds.Intersects(spike.Bounds))
+            {
+                if (player.IsOnTopOf((GameObject)spike))
+                {
+
+                }
+                player.Death(new Vector2(100, 100));
+            }
+        }
 
         private void FireEnemyCollision(Enemy enemy, FireBall fireBall)
         {
@@ -217,8 +228,17 @@ namespace MarioPlatformer
                     enemies[i].Update(gameTime);
                     continue;
                 }
-                PlayerCollision(enemies[i], gameTime);
-                enemies[i].Update(gameTime);
+                else if (enemies[i] is Spike)
+                {
+                    enemies[i].Update(gameTime);
+                    PlayerCollision((Spike)enemies[i], gameTime);
+                    continue;
+                }
+                else
+                {
+                    PlayerCollision(enemies[i], gameTime);
+                    enemies[i].Update(gameTime);
+                }
                 for (int j = player.fireBalls.Count-1; j > -1; j--)
                 {
                     FireEnemyCollision(enemies[i], player.fireBalls[j]);

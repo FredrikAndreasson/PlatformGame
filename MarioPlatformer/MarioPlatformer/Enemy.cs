@@ -36,6 +36,7 @@ namespace MarioPlatformer
                 5 => new Cannon(loader.LoadSpriteSheet("Obstacles\\canon", Vector2.Zero, new Vector2(16, 16), 0), level, Vector2.Zero, new Vector2(16, 16), loader.LoadSpriteSheet("Obstacles\\bullet", Vector2.Zero, new Vector2(16, 13), 0)),
                 6 => new PatrollingEnemy(loader.LoadSpriteSheet("Enemies\\DKenemy", Vector2.Zero, new Vector2(15, 20), 1), level, Vector2.Zero, new Vector2(15, 20), 1, 70.0f),
                 7 => new TurtleEnemy(loader.LoadSpriteSheet("Enemies\\TurtleEnemy", Vector2.Zero, new Vector2(16, 24), 1), level, Vector2.Zero, new Vector2(17, 24), 1, 70.0f),
+                11 => new Spike(loader.LoadSpriteSheet("Enemies\\spikes", Vector2.Zero, new Vector2(16, 16), 1), level, Vector2.Zero, new Vector2(16, 16), 0, 0.0f),
                 _ => null,
             };
         }
