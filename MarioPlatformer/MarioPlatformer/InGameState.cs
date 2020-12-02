@@ -22,22 +22,24 @@ namespace MarioPlatformer
 
         private GraphicsDevice graphicsDevice;
         private ParalaxBackgroundManager backgroundManager;
-
-        private List<int> highscores;
+                
         private bool highscoresSaved;
 
         private bool debug = true;
         private Texture2D debugTexture;
         private Texture2D collisionTexture;
 
-        public InGameState(SpriteSheetLoader loader, GraphicsDevice graphicsDevice, GameWindow window)
+        public InGameState(SpriteSheetLoader loader, GraphicsDevice graphicsDevice, GameWindow window, HUD hud)
         {
+<<<<<<< HEAD
             this.loader = loader;
 
+=======
+>>>>>>> 8e3b8504cd82a87ec431bab53dac45542550e065
             this.graphicsDevice = graphicsDevice;
 
-            int highscore = LoadHighscore();
-            this.hud = new HUD(window, 100, 100, loader.LoadTexture("score-numbers"), loader.LoadSpriteSheet("player", Vector2.Zero, new Vector2(16, 16)).GetAt(0, 0), highscore);
+            int highscore = hud.LoadHighscore();
+            this.hud = hud; 
             this.level = new Level(loader, LevelData.LoadLevelData("Content\\Level1.lvl"), hud);
 
             this.hud.Player = level.MyPlayer;
@@ -80,8 +82,8 @@ namespace MarioPlatformer
 
             if(level.MyPlayer.Health <= 0 && !highscoresSaved)
             {
-                highscores.Add(hud.Score);
-                SaveHighscores();
+                hud.Highscores.Add(hud.Score);
+                hud.SaveHighscores();
                 highscoresSaved = true;
             }
         }
@@ -131,48 +133,6 @@ namespace MarioPlatformer
             spriteBatch.End();
         }
 
-        private int LoadHighscore()
-        {
-            string filePath = "Content\\Highscores.txt";
-            if (!File.Exists(filePath))
-            {
-                File.Create(filePath);
-                return 0;
-            }
-
-            StreamReader sr = new StreamReader(filePath);
-
-            highscores = new List<int>();
-
-            string currentLine;
-            while ((currentLine = sr.ReadLine()) != null)
-            {
-                int score = int.Parse(currentLine);
-                highscores.Add(score);
-            }
-
-            sr.Close();
-
-            if (highscores.Count == 0)
-            {
-                return 0;
-            }
-
-            highscores.Sort((o0, o1) => o1 - o0);
-            return highscores[0];
-        }
-
-        private void SaveHighscores()
-        {
-
-            StreamWriter writer = new StreamWriter(@"Content\\Highscores.txt", false);
-
-            foreach (int score in highscores)
-            {
-                writer.WriteLine(score);
-            }
-
-            writer.Close();
-        }
+       
     }
 }

@@ -44,19 +44,20 @@ namespace MarioPlatformer
             spritesheetLoader = new SpriteSheetLoader(Content, GraphicsDevice);    
             
             SpriteFont font = Content.Load<SpriteFont>(@"font");
-            menu = new MenuState(font);
 
-            menu.Actions.Add(new MenuOption("1. Start Game", () => System.Diagnostics.Debug.WriteLine("StartGame")));
-            menu.Actions.Add(new MenuOption("2. Switch Character", () => System.Diagnostics.Debug.WriteLine("Switching Character")));
-            menu.Actions.Add(new MenuOption("3. Open Editor", () => System.Diagnostics.Debug.WriteLine("Opening Editor")));
-            menu.Actions.Add(new MenuOption("4. Exit", () => Exit()));
+            HUD hud = new HUD(Window, 100, 100, spritesheetLoader.LoadTexture("score-numbers"), spritesheetLoader.LoadSpriteSheet("player", Vector2.Zero, new Vector2(16, 16)).GetAt(0, 0));
 
-            inGameState = new InGameState(spritesheetLoader, GraphicsDevice, Window);
+            menu = new MenuState(font, Window, hud);
+
+            menu.Actions.Add(new MenuOption("1. Start Game", () => gameState = inGameState));
+            menu.Actions.Add(new MenuOption("2. Open Editor", () => gameState = editor));
+            menu.Actions.Add(new MenuOption("3. Exit", () => Exit()));
+
+            inGameState = new InGameState(spritesheetLoader, GraphicsDevice, Window, hud);
             editor = new Editor(spritesheetLoader, Window);
-            editor.LoadLevel( "Content\\Level1.lvl");
-            gameState = inGameState;
-            //gameState = editor;
-            
+            editor.LoadLevel("Content\\Level1.lvl");
+            gameState = menu;
+            //gameState = editor;           
 
         }
 
