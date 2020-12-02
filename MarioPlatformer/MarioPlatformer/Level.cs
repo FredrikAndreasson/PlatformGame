@@ -10,6 +10,7 @@ namespace MarioPlatformer
     {
         private LevelData levelData;
         private SpriteSheet spritesheet;
+        private HUD hud;
         
         private Tile[] tiles;
         private Tile[] objects;
@@ -21,9 +22,10 @@ namespace MarioPlatformer
 
         private bool clearedSpawns;
 
-        public Level(SpriteSheetLoader loader, LevelData levelData)
+        public Level(SpriteSheetLoader loader, LevelData levelData, HUD hud)
         {
             this.levelData = levelData;
+            this.hud = hud;
 
             SpriteSheet playerAnimationSheet = loader.LoadSpriteSheet("player");
 
@@ -113,11 +115,13 @@ namespace MarioPlatformer
                 {
                     enemy.isDead = true;
                     player.CollisionJump(350.0f);
+                    hud.Score += 100;
                 }
                 else
                 {
                     enemy.isDead = true;
                     player.Death(new Vector2(100, 100));
+                    player.Health--;
                 }                
             }
         }

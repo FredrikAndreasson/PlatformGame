@@ -31,7 +31,13 @@ namespace MarioPlatformer
             this.health = health;
             this.speed = speed;
         }
-        
+
+        public int Health
+        {
+            get => health;
+            set => health = value;
+        }
+
         protected abstract void InternalUpdateAnimation(GameTime gameTime);
 
         protected void UpdateAnimation(GameTime gameTime)

@@ -260,6 +260,18 @@
 /processorParam:TextureFormat=Color
 /build:Powerups/flowerpowerup.png
 
+#begin score-numbers.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=0,0,0,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:score-numbers.png
+
 #begin scrollingBackground.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
