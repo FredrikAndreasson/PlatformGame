@@ -28,7 +28,6 @@ namespace MarioPlatformer
         {
             this.graphicsDevice = graphicsDevice;
 
-            int highscore = hud.LoadHighscore();
             this.hud = hud; 
             this.level = new Level(loader, LevelData.LoadLevelData("Content\\Level1.lvl"), hud);
 
