@@ -25,6 +25,8 @@ namespace MarioPlatformer
         private bool lvlWon;
         private bool clearedSpawns;
 
+        public int scoreToAdd;
+
         public Level(SpriteSheetLoader loader, LevelData levelData, HUD hud)
         {
             this.levelData = levelData;
@@ -113,6 +115,12 @@ namespace MarioPlatformer
             enemies.Add(enemy);
         }
 
+        private void ScoreToAddCheck()
+        {
+            hud.Score += scoreToAdd;
+            scoreToAdd = 0;
+        }
+
         private void PlayerCollision(PowerupBlock powerupBlock, GameTime gameTime)
         {
             if (player.IsBelow(powerupBlock))
@@ -198,6 +206,7 @@ namespace MarioPlatformer
             }
 
             WinCheck();
+            ScoreToAddCheck();
 
             DeadEnemyCheck();
             player.Update(gameTime);
