@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace MarioPlatformer
 {
@@ -13,11 +15,7 @@ namespace MarioPlatformer
 
         private GraphicsDeviceManager Graphics;
         private SpriteBatch spriteBatch;
-
-        private Camera camera;
-        private Player player;
-        private ScrollingBackground scrollingBackground;
-
+        
         //GameStates
         private GameState gameState;
         private InGameState inGameState;
@@ -25,8 +23,8 @@ namespace MarioPlatformer
         private Editor editor;
 
         private SpriteSheetLoader spritesheetLoader;
+       
 
-        private Texture2D circle;
         public Game1()
         {
             Graphics = new GraphicsDeviceManager(this);
@@ -59,9 +57,10 @@ namespace MarioPlatformer
             gameState = inGameState;
             //gameState = editor;
             
-            circle = spritesheetLoader.CreateCircleTexture(50, Color.Green);
 
         }
+
+        
 
         protected override void Update(GameTime gameTime)
         {
