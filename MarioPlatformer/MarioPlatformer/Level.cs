@@ -226,6 +226,13 @@ namespace MarioPlatformer
 
             DeadEnemyCheck();
             player.Update(gameTime);
+
+            if(player.Position.Y >= 500)
+            {
+                player.Death(playerSpawn);
+                player.Health--;
+            }
+
             for (int i = enemies.Count-1; i > -1; i--)
             {
                 if (enemies[i] is Cannon)
