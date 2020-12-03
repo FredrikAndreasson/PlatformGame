@@ -45,9 +45,44 @@ namespace MarioPlatformer
             return GetColliders(colliders, Bounds);
         }
 
+        public bool PixelCollision(GameObject collider, Rectangle bounds)
+        {
+            Texture2D texA = currentSpriteSheet.Sprite.Texture;
+            Texture2D texB = collider.currentSpriteSheet.Sprite.Texture;
+
+            Color[] colorsA = new Color[texA.Width * texA.Height];
+            texA.GetData(colorsA);
+
+            Color[] colorsB = new Color[texB.Width * texB.Height];
+            texB.GetData(colorsB);
+
+            int top = Math.Max(bounds.Top, collider.Bounds.Top);
+            int bottom = Math.Min(bounds.Bottom, collider.Bounds.Bottom);
+            int left = Math.Max(bounds.Left, collider.Bounds.Left);
+            int right = Math.Min(bounds.Right, collider.Bounds.Right);
+
+            for (int y = top; y < bottom; y++)
+            {
+                for (int x = left; x < right; x++)
+                {
+                    Color colorA = colorsA[((x - bounds.Left) + (y - bounds.Top) * bounds.Width) / (int)Game1.Scale.X];
+                    Color colorB = colorsB[((x - collider.Bounds.Left) + (y - collider.Bounds.Top) * collider.Bounds.Width) / (int)Game1.Scale.X];
+
+                    if (colorA.A != 0 && colorB.A != 0)
+                    {                        
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public GameObject[] GetColliders(GameObject[] colliders, Rectangle bounds)
         {
             List<GameObject> collidingObjects = new List<GameObject>();
+                       
+
             foreach (GameObject collider in colliders)
             {
                 if (!collider.collidable)
@@ -56,8 +91,9 @@ namespace MarioPlatformer
                 }
                 if (bounds.Intersects(collider.Bounds))
                 {
+                    
                     collidingObjects.Add(collider);
-                }
+                }                
             }
             return collidingObjects.ToArray();
         }

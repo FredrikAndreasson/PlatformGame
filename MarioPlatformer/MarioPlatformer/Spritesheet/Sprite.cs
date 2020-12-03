@@ -33,6 +33,8 @@ namespace MarioPlatformer
             set;
         }
 
+        public Texture2D Texture => texture;
+
         public void Draw(SpriteBatch spriteBatch, Vector2 position, Vector2 scale, SpriteEffects spriteEffects = SpriteEffects.None, Color? color = null)
         {
             if (color == null)

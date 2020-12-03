@@ -150,7 +150,7 @@ namespace MarioPlatformer
         }
         private void PlayerCollision(Enemy enemy, GameTime gameTime)
         {
-            if(player.Bounds.Intersects(enemy.Bounds))
+            if(player.Bounds.Intersects(enemy.Bounds) && player.PixelCollision(enemy, player.Bounds))
             {
                 if (player.IsOnTopOf(enemy))
                 {

@@ -29,7 +29,7 @@ namespace MarioPlatformer
                 
         private bool highscoresSaved;
 
-        private bool debug = false;
+        private bool debug = true;
         private Texture2D debugTexture;
         private Texture2D collisionTexture;
 
