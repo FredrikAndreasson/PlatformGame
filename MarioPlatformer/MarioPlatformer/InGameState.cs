@@ -161,7 +161,6 @@ namespace MarioPlatformer
                 spriteBatch.End();
             }
         }
-
        
     }
 }

@@ -25,18 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:background.png
 
-#begin background2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:background2.png
-
 #begin Backgrounds/DayHill.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -132,18 +120,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:blocks.png
-
-#begin enemies.gif
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:enemies.gif
 
 #begin Enemies/DKenemy.png
 /importer:TextureImporter
@@ -271,16 +247,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:score-numbers.png
-
-#begin scrollingBackground.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:scrollingBackground.jpg
 
